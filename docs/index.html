@@ -19,6 +19,8 @@ a.ls.done{background:var(--okbg);border-color:var(--ac)}
 a.ls.lock{opacity:.5;pointer-events:none}
 .n{font-weight:800;min-width:34px}
 .sc{margin-left:auto;font-size:14px;color:var(--mut)}
+.day{font-size:19px;margin:22px 0 4px}
+.book{font-size:15px;color:var(--mut);padding:4px 4px 0}
 .top{display:flex;justify-content:space-between;align-items:center}
 .top a{color:var(--ac);font-weight:600;text-decoration:none}
 </style>
@@ -36,21 +38,183 @@ a.ls.lock{opacity:.5;pointer-events:none}
 <script>
 /* DATA-START (wird vom Coach aktualisiert) */
 var DATA={
-  "exam":"2026-11-26",
-  "streak":1,"xp":0,
-  "completed":{},
-  "lessons":[
-    {"id":"01","title":"Grundbegriffe: Ordnung, allgemeine & spezielle Lösung","file":"lessons/01-grundbegriffe-dgl.html"},
-    {"id":"02","title":"Richtungsfeld & Linienelemente","file":null},
-    {"id":"03","title":"Trennen der Variablen","file":null},
-    {"id":"04","title":"Exponentielles & beschränktes Wachstum","file":null},
-    {"id":"05","title":"Textbeispiele: Newton-Abkühlung & Bewegung","file":null},
-    {"id":"06","title":"Lineare DGL 1. Ordnung: homogen, inhomogen","file":null},
-    {"id":"07","title":"Störterm-Ansätze & Koeffizientenvergleich","file":null},
-    {"id":"08","title":"RC- und RL-Glied","file":null},
-    {"id":"09","title":"Variation der Konstanten","file":null},
-    {"id":"10","title":"Probe-Schularbeit (gemischt)","file":null}
-  ]
+ "exam": "2026-11-26",
+ "streak": 1,
+ "xp": 0,
+ "completed": {},
+ "days": [
+  {
+   "day": "Sa 21.11.",
+   "time": "1 h",
+   "book": "4.8, 4.10, 4.21, 4.26a, 4.31a, 4.34"
+  },
+  {
+   "day": "So 22.11.",
+   "time": "4 h",
+   "book": "4.37, 4.44, 4.41, 4.53, 4.54, 4.57, 4.51, 4.67, 4.69, 4.72"
+  },
+  {
+   "day": "Mo 23.11.",
+   "time": "30 min",
+   "book": "4.77a, 4.78a"
+  },
+  {
+   "day": "Di 24.11.",
+   "time": "30 min",
+   "book": "4.132, 4.134, 4.144"
+  },
+  {
+   "day": "Mi 25.11.",
+   "time": "30 min",
+   "book": "Wissens-Check 1–7"
+  }
+ ],
+ "lessons": [
+  {
+   "id": "01",
+   "title": "Grundbegriffe: Ordnung, allgemeine & spezielle Lösung",
+   "day": "Sa 21.11.",
+   "file": "lessons/01-grundbegriffe-dgl.html"
+  },
+  {
+   "id": "02",
+   "title": "DGL aus Text aufstellen",
+   "day": "Sa 21.11.",
+   "file": "lessons/02-dgl-aus-text.html"
+  },
+  {
+   "id": "03",
+   "title": "Richtungsfeld & Linienelemente",
+   "day": "Sa 21.11.",
+   "file": "lessons/03-richtungsfeld.html"
+  },
+  {
+   "id": "04",
+   "title": "Trennen der Variablen I",
+   "day": "Sa 21.11.",
+   "file": "lessons/04-trennen-der-variablen-1.html"
+  },
+  {
+   "id": "05",
+   "title": "Trennen der Variablen II: Anfangswerte & Fehler",
+   "day": "Sa 21.11.",
+   "file": "lessons/05-trennen-der-variablen-2.html"
+  },
+  {
+   "id": "06",
+   "title": "Wiederholung Tag 1",
+   "day": "Sa 21.11.",
+   "file": "lessons/06-wiederholung-tag-1.html"
+  },
+  {
+   "id": "07",
+   "title": "Exponentielles Wachstum & Abnahme",
+   "day": "So 22.11.",
+   "file": null
+  },
+  {
+   "id": "08",
+   "title": "Beschränktes Wachstum & Abnahme",
+   "day": "So 22.11.",
+   "file": null
+  },
+  {
+   "id": "09",
+   "title": "Newton'sches Abkühlungsgesetz",
+   "day": "So 22.11.",
+   "file": null
+  },
+  {
+   "id": "10",
+   "title": "Bewegungsvorgänge (Kräftegleichgewicht)",
+   "day": "So 22.11.",
+   "file": null
+  },
+  {
+   "id": "11",
+   "title": "Wiederholung: Anwendungen",
+   "day": "So 22.11.",
+   "file": null
+  },
+  {
+   "id": "12",
+   "title": "Lineare DGL: homogen/inhomogen, y = yh + yp",
+   "day": "So 22.11.",
+   "file": null
+  },
+  {
+   "id": "13",
+   "title": "Störterm-Ansätze: Konstante, Polynom, e-Funktion",
+   "day": "So 22.11.",
+   "file": null
+  },
+  {
+   "id": "14",
+   "title": "Störterm sin/cos & Koeffizientenvergleich",
+   "day": "So 22.11.",
+   "file": null
+  },
+  {
+   "id": "15",
+   "title": "Flüchtiger & stationärer Teil",
+   "day": "So 22.11.",
+   "file": null
+  },
+  {
+   "id": "16",
+   "title": "RC-Glied",
+   "day": "So 22.11.",
+   "file": null
+  },
+  {
+   "id": "17",
+   "title": "RL-Glied",
+   "day": "So 22.11.",
+   "file": null
+  },
+  {
+   "id": "18",
+   "title": "Wiederholung Tag 2",
+   "day": "So 22.11.",
+   "file": null
+  },
+  {
+   "id": "19",
+   "title": "Variation der Konstanten",
+   "day": "Mo 23.11.",
+   "file": null
+  },
+  {
+   "id": "20",
+   "title": "Wiederholung gemischt",
+   "day": "Mo 23.11.",
+   "file": null
+  },
+  {
+   "id": "21",
+   "title": "Textaufgaben gemischt",
+   "day": "Di 24.11.",
+   "file": null
+  },
+  {
+   "id": "22",
+   "title": "Wiederholung gemischt",
+   "day": "Di 24.11.",
+   "file": null
+  },
+  {
+   "id": "23",
+   "title": "Probe-SA Teil 1",
+   "day": "Mi 25.11.",
+   "file": null
+  },
+  {
+   "id": "24",
+   "title": "Probe-SA Teil 2 + Wissens-Check",
+   "day": "Mi 25.11.",
+   "file": null
+  }
+ ]
 };
 /* DATA-END */
 var L={};try{L=JSON.parse(localStorage.getItem("lern")||"{}")}catch(e){}
@@ -58,11 +222,15 @@ var done=Object.assign({},DATA.completed,L.done||{});
 document.getElementById("streak").textContent=Math.max(DATA.streak,L.streak||0);
 document.getElementById("xp").textContent=Math.max(DATA.xp,L.xp||0);
 document.getElementById("cnt").textContent=Object.keys(done).length+"/"+DATA.lessons.length;
-var d=Math.ceil((new Date(DATA.exam)-new Date(new Date().toDateString()))/864e5);
+var ep=DATA.exam.split("-"),now=new Date();var d=Math.round((new Date(+ep[0],ep[1]-1,+ep[2])-new Date(now.getFullYear(),now.getMonth(),now.getDate()))/864e5);
 document.getElementById("sa").textContent=d>0?"Schularbeit in "+d+" Tag"+(d===1?"":"en"):"Schularbeit: "+DATA.exam;
-var h="";DATA.lessons.forEach(function(x){
-  var c=done[x.id];var cls=c?"ls done":(x.file?"ls":"ls lock");
-  h+='<a class="'+cls+'" href="'+(x.file||"#")+'"><span class="n">'+x.id+'</span><span>'+x.title+'</span><span class="sc">'+(c?"✓ "+c.score:(x.file?"neu":"🔒"))+'</span></a>';
+var h="";DATA.days.forEach(function(dy){
+  h+='<h2 class="day">'+dy.day+' <span class="mut">· '+dy.time+'</span></h2>';
+  DATA.lessons.filter(function(x){return x.day===dy.day}).forEach(function(x){
+    var c=done[x.id];var cls=c?"ls done":(x.file?"ls":"ls lock");var rep=/Wiederholung/.test(x.title)?"🔁 ":"";
+    h+='<a class="'+cls+'" href="'+(x.file||"#")+'"><span class="n">'+x.id+'</span><span>'+rep+x.title+'</span><span class="sc">'+(c?"✓ "+c.score:(x.file?"neu":"🔒"))+'</span></a>';
+  });
+  h+='<div class="book">📝 Buch auf Papier: '+dy.book+'</div>';
 });
 document.getElementById("list").innerHTML=h;
 </script>

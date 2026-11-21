@@ -18,4 +18,10 @@ Noch offen.
 Alle Buch-Beispiele vom Stoffzettel ohne Lösung lösbar sind und die Probe-SA (Lektion 10) gut läuft.
 
 ## Zeit pro Tag
-Noch offen. Plan: 10 Lektionen bis 25.11. (ca. 2 pro Tag).
+- Sa 21.11.: 1 h
+- So 22.11.: 4 h
+- Mo 23. – Mi 25.11.: je 30 min
+- Do 26.11.: Schularbeit
+
+## Stil
+Duolingo-mäßig: viele kurze Lektionen, jeder Tag endet mit einer Wiederholungs-Lektion, Basics kommen in jeder Lektion als 🔁-Fragen wieder. Nach jeder Lektion 1–2 Buchbeispiele auf Papier.

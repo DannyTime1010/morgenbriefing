@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>L04 · Trennen der Variablen I</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--tx:#1f2430;--mut:#6b7280;--ac:#58cc02;--acd:#46a302;--bad:#ea2b2b;--bd:#e5e7eb;--okbg:#e7f9d4;--badbg:#ffe1e1}
+@media(prefers-color-scheme:dark){:root{--bg:#131820;--card:#1d242f;--tx:#eef1f6;--mut:#9aa4b2;--bd:#2c3542;--okbg:#1f3a14;--badbg:#3f1b1b}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:18px/1.55 system-ui,-apple-system,sans-serif;padding:16px;max-width:640px;margin-inline:auto;padding-bottom:120px}
+a.back{display:inline-block;padding:10px 0;color:var(--ac);text-decoration:none;font-weight:600}
+h1{font-size:24px;margin:4px 0 12px}
+.bar{height:10px;background:var(--bd);border-radius:5px;overflow:hidden;margin:8px 0 16px}
+.bar i{display:block;height:100%;width:0;background:var(--ac);transition:width .3s}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:16px;margin-bottom:14px}
+.ex{background:var(--okbg);border-radius:12px;padding:12px;margin-top:10px}
+code{background:var(--bd);padding:1px 6px;border-radius:6px}
+.btn{display:block;width:100%;min-height:54px;padding:14px;font-size:18px;font-weight:700;border-radius:14px;border:2px solid var(--bd);border-bottom-width:4px;background:var(--card);color:var(--tx);margin:10px 0;text-align:left;cursor:pointer}
+.btn.go{background:var(--ac);border-color:var(--acd);color:#fff;text-align:center}
+.btn.ok{background:var(--okbg);border-color:var(--ac)}
+.btn.no{background:var(--badbg);border-color:var(--bad)}
+.btn:disabled{opacity:1;cursor:default}
+input.in{width:100%;min-height:54px;padding:12px;font-size:20px;border-radius:14px;border:2px solid var(--bd);background:var(--card);color:var(--tx)}
+.fb{border-radius:14px;padding:14px;margin-top:12px}
+.fb.ok{background:var(--okbg)}.fb.no{background:var(--badbg)}
+.hide{display:none}
+.mut{color:var(--mut);font-size:15px}
+.res{font-family:ui-monospace,monospace;background:var(--bd);padding:12px;border-radius:12px;word-break:break-all}
+.rep{display:inline-block;font-size:13px;background:#ffb02e;color:#222;border-radius:8px;padding:2px 8px;margin-bottom:6px}
+</style>
+</head>
+<body>
+<a class="back" href="../index.html">← Übersicht</a>
+<h1 id="ttl">L04 · Trennen der Variablen I</h1>
+<div class="bar"><i id="bar"></i></div>
+
+<!-- 1) ERKLÄRUNG -->
+<section id="intro">
+  <div class="card">
+    <p>Funktioniert bei DGL der Form <code>y′ = f(x)·g(y)</code>, also wenn sich x-Teil und y-Teil als <b>Produkt</b> schreiben lassen.</p>
+<p><b>1.</b> y′ als <code>dy/dx</code> schreiben<br>
+<b>2.</b> Trennen: alles mit y nach links, alles mit x nach rechts<br>
+<b>3.</b> Beide Seiten integrieren, <b>+C nur auf einer Seite</b><br>
+<b>4.</b> Nach y auflösen (Entlogarithmieren)</p>
+<p>Merke: ∫ 1/y dy = ln|y|, und e^(… + C) wird zu C·e^(…).</p>
+    <div class="ex"><b>Beispiel:</b><br>y′ = 2x·y<br>dy/y = 2x dx<br>ln|y| = x² + C<br>y = C·e^(x²)</div>
+  </div>
+  <button class="btn go" id="start">Los geht's →</button>
+</section>
+
+<!-- 2) QUIZ -->
+<section id="quiz" class="hide">
+  <div class="mut" id="cnt"></div>
+  <div class="card"><div id="rep" class="hide"><span class="rep">🔁 Wiederholung</span></div><div id="q"></div></div>
+  <div id="ans"></div>
+  <div id="fb" class="fb hide"></div>
+  <button class="btn go hide" id="next">Weiter →</button>
+</section>
+
+<!-- 3) ERGEBNIS -->
+<section id="end" class="hide">
+  <div class="card">
+    <h2 id="score"></h2>
+    <p id="xpmsg"></p>
+    <p class="mut">Schick mir diesen Code im Chat, dann trage ich es in dein progress.json ein:</p>
+    <div class="res" id="code"></div>
+    <button class="btn go" id="copy">📋 Code kopieren</button>
+  </div>
+  <a class="btn go" href="../index.html" style="text-decoration:none">Zur Übersicht</a>
+</section>
+
+<script>
+var LESSON_ID="04";
+/* Fragetypen:
+   {t:"mc",  q:"Frage", o:["A","B","C"], a:1, e:"Erklärung", topic:"Thema", rep:false}
+   {t:"fill",q:"Der ___ ist …", a:["antwort","alt. schreibweise"], e:"Erklärung", topic:"Thema"}
+   {t:"calc",q:"12·3 = ?", a:36, tol:0, e:"Rechenweg", topic:"Thema"}  */
+var Q=[
+  {t:"mc",q:"Welche DGL lässt sich NICHT mit Trennen der Variablen lösen?",o:["y′ = 2x²/e^y","y′ + x = y","y′ = 2x·y","ẏ − 3t·y = 0"],a:1,e:"y′ = y − x ist eine Differenz, kein Produkt f(x)·g(y). Die anderen lassen sich als Produkt schreiben. (4.25)",topic:"Wann ist Trennen möglich"},
+  {t:"mc",q:"Was ist ∫ (1/y) dy?",o:["1/y²","ln|y| + C","−1/y² + C","y + C"],a:1,e:"Die Stammfunktion von 1/y ist ln|y|. Das brauchst du fast bei jedem Trennen der Variablen.",topic:"Integral 1/y"},
+  {t:"mc",q:"Löse y′ = 3y.",o:["y = 3x + C","y = C·e^(3x)","y = e^(3x) + C","y = C·e^(x/3)"],a:1,e:"dy/y = 3 dx → ln|y| = 3x + C → y = C·e^(3x).",topic:"Trennen der Variablen"},
+  {t:"mc",q:"Löse y′ = y·sin(x).",o:["y = C·e^(cos x)","y = C·e^(−cos x)","y = C·e^(sin x)","y = −cos(x) + C"],a:1,e:"dy/y = sin(x) dx → ln|y| = −cos(x) + C → y = C·e^(−cos x). Stammfunktion von sin ist −cos! (Wissens-Check 4)",topic:"Trennen der Variablen"},
+  {t:"calc",q:"−5·dy/dx + 4y = 0 hat die Lösung y = C·e^(k·x). Wie groß ist k?",a:0.8,tol:0.001,e:"Umformen: 5·dy/dx = 4y → dy/dx = 0,8y → y = C·e^(0,8x). (4.27a)",topic:"Trennen der Variablen"},
+  {t:"mc",q:"Löse y′ = 2·(5 − y).",o:["y = 5 + C·e^(2x)","y = 5 − C·e^(−2x)","y = C·e^(−2x)","y = 5 − C·e^(2x)"],a:1,e:"dy/(5 − y) = 2 dx → −ln|5 − y| = 2x + C (Minus durch lineare Substitution!) → 5 − y = C·e^(−2x) → y = 5 − C·e^(−2x). (4.31a)",topic:"lineare Substitution beim Integrieren"},
+  {t:"mc",q:"Warum schreibt man beim Integrieren nur auf einer Seite +C?",o:["Weil die linke Seite keine Konstante hat","Weil sich zwei Konstanten zu einer zusammenfassen lassen","Weil C immer 0 ist","Das ist ein Fehler, man braucht zwei"],a:1,e:"C₂ − C₁ ist wieder nur eine beliebige Konstante. Also reicht ein C.",topic:"Integrationskonstante"},
+  {t:"calc",q:"Steigung des Linienelements von y′ = x + y im Punkt (2|3)?",a:5,tol:0,e:"2 + 3 = 5.",topic:"Steigung im Richtungsfeld",rep:true}
+];
+
+var i=0,right=0,wrong=[],$=function(id){return document.getElementById(id)};
+function show(id){["intro","quiz","end"].forEach(function(s){$(s).classList.toggle("hide",s!==id)})}
+$("start").onclick=function(){show("quiz");ask()};
+function norm(s){return String(s).trim().toLowerCase().replace(/\s+/g," ")}
+function ask(){
+  var x=Q[i];$("cnt").textContent="Frage "+(i+1)+" von "+Q.length;
+  $("bar").style.width=(i/Q.length*100)+"%";
+  $("rep").classList.toggle("hide",!x.rep);
+  $("q").textContent=x.q;$("fb").className="fb hide";$("next").classList.add("hide");
+  var a=$("ans");a.innerHTML="";
+  if(x.t==="mc"){x.o.forEach(function(o,k){var b=document.createElement("button");b.className="btn";b.textContent=o;b.onclick=function(){done(k===x.a,b)};a.appendChild(b)})}
+  else{
+    var inp=document.createElement("input");inp.className="in";inp.autocomplete="off";inp.autocapitalize="none";
+    if(x.t==="calc")inp.inputMode="decimal";
+    var b=document.createElement("button");b.className="btn go";b.textContent="Prüfen";
+    b.onclick=function(){
+      var v=inp.value;if(!v.trim())return;var ok;
+      if(x.t==="calc"){ok=Math.abs(parseFloat(v.replace(",","."))-x.a)<=(x.tol||0)}
+      else{ok=x.a.some(function(z){return norm(z)===norm(v)})}
+      inp.disabled=true;done(ok,b)};
+    a.appendChild(inp);a.appendChild(b);
+  }
+}
+function done(ok,btn){
+  var x=Q[i];
+  if(x.t==="mc"){var bs=$("ans").children;for(var k=0;k<bs.length;k++){bs[k].disabled=true;if(k===x.a)bs[k].classList.add("ok")}if(!ok)btn.classList.add("no")}
+  else btn.disabled=true;
+  if(ok)right++;else wrong.push(i+1);
+  var sol=x.t==="mc"?x.o[x.a]:(x.t==="calc"?x.a:x.a[0]);
+  var f=$("fb");f.className="fb "+(ok?"ok":"no");
+  f.innerHTML=(ok?"✅ <b>Richtig!</b> ":"❌ <b>Nicht ganz.</b> Richtig: <b>"+sol+"</b>. ")+"<br>"+x.e;
+  var n=$("next");n.classList.remove("hide");n.textContent=i===Q.length-1?"Ergebnis →":"Weiter →";
+  n.scrollIntoView({behavior:"smooth",block:"center"});
+}
+$("next").onclick=function(){i++;if(i<Q.length)ask();else finish()};
+function today(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function finish(){
+  $("bar").style.width="100%";show("end");
+  var xp=right*10+20+(right===Q.length?10:0);
+  var sc=right+"/"+Q.length;
+  $("score").textContent=(right===Q.length?"🎉 ":"👍 ")+sc+" richtig";
+  $("xpmsg").textContent="+"+xp+" XP";
+  var code="L"+LESSON_ID+" "+sc+(wrong.length?" falsch:"+wrong.join(","):"");
+  $("code").textContent=code;
+  $("copy").onclick=function(){
+    if(navigator.clipboard)navigator.clipboard.writeText(code).then(function(){$("copy").textContent="✓ Kopiert"},function(){});
+  };
+  try{
+    var L=JSON.parse(localStorage.getItem("lern")||"{}"),t=today();
+    L.done=L.done||{};
+    if(!L.done[LESSON_ID]){L.xp=(L.xp||0)+xp}
+    L.done[LESSON_ID]={score:sc,date:t};
+    if(L.last!==t){var d=L.last?(new Date(t)-new Date(L.last))/864e5:99;L.streak=d<=1?(L.streak||0)+1:1;L.last=t}
+    localStorage.setItem("lern",JSON.stringify(L));
+  }catch(e){}
+}
+</script>
+</body>
+</html>
