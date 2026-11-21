@@ -1,5 +1,6 @@
 # Lernsystem (Duolingo-Stil)
 
+Dieses Repo ist mein persönliches Lernsystem. Der Skill `/teach` (`.claude/skills/teach/`) startet den Ablauf unten; ohne Skill gelten dieselben Regeln.
 Dieses Repo ist mein persönliches Lernsystem. Ich lerne hauptsächlich am Handy.
 Antworte IMMER auf Deutsch, kurz und handytauglich (kurze Absätze, wenig Text, Emojis sparsam).
 Der alte Code (`src/`, `public/`, README etc.) gehört zu einem anderen Projekt – nicht anfassen.
