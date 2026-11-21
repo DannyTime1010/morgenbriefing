@@ -28,6 +28,29 @@ input.in{width:100%;min-height:54px;padding:12px;font-size:20px;border-radius:14
 .mut{color:var(--mut);font-size:15px}
 .res{font-family:ui-monospace,monospace;background:var(--bd);padding:12px;border-radius:12px;word-break:break-all}
 .rep{display:inline-block;font-size:13px;background:#ffb02e;color:#222;border-radius:8px;padding:2px 8px;margin-bottom:6px}
+
+.fig{width:100%;height:auto;display:block;margin:4px 0 10px}
+.fig text{paint-order:stroke;stroke:var(--card);stroke-width:4px;stroke-linejoin:round;fill:var(--tx);font-family:system-ui,-apple-system,sans-serif;font-size:15px}
+.fig .big{font-size:19px;font-weight:700}
+.fig .mt{fill:var(--mut)}
+.fig .hlt,.fig tspan.hlt{fill:var(--acd);font-weight:700}
+.fig .badt{fill:var(--bad);font-weight:700}
+.fig tspan.bl{fill:#3b82f6;font-weight:700}.fig tspan.or{fill:#f59e0b;font-weight:700}
+.fig .bx{fill:var(--card);stroke:var(--bd);stroke-width:2}
+.fig .bxg{fill:var(--okbg);stroke:var(--ac);stroke-width:2}
+.fig .bxr{fill:var(--badbg);stroke:var(--bad);stroke-width:2}
+.fig .ar{stroke:var(--mut);stroke-width:2}.fig .ahf{fill:var(--mut)}
+.fig .ax{stroke:var(--mut);stroke-width:1.2}
+.fig .cv{fill:none;stroke:var(--mut);stroke-width:2;opacity:.55}
+.fig .cvh{fill:none;stroke:var(--ac);stroke-width:3.5}
+.fig .fl{stroke:#3b82f6;stroke-width:1.8;stroke-linecap:round}
+.fig .dash{stroke:var(--bad);stroke-width:1.5;stroke-dasharray:5 4}
+.fig .dt{fill:var(--ac);stroke:var(--card);stroke-width:2}
+.fig .acl{stroke:var(--ac);stroke-width:2}
+.fig .bad{stroke:var(--bad);stroke-width:3}
+.ct{font-size:18px;margin:4px 2px 0}
+.dots{display:flex;gap:6px;justify-content:center;margin:6px 0}
+.dots i{width:9px;height:9px;border-radius:50%;background:var(--bd)}.dots i.on{background:var(--ac)}
 </style>
 </head>
 <body>
@@ -38,13 +61,7 @@ input.in{width:100%;min-height:54px;padding:12px;font-size:20px;border-radius:14
 <!-- 1) ERKLÄRUNG -->
 <section id="intro">
   <div class="card">
-    <p>Funktioniert bei DGL der Form <code>y′ = f(x)·g(y)</code>, also wenn sich x-Teil und y-Teil als <b>Produkt</b> schreiben lassen.</p>
-<p><b>1.</b> y′ als <code>dy/dx</code> schreiben<br>
-<b>2.</b> Trennen: alles mit y nach links, alles mit x nach rechts<br>
-<b>3.</b> Beide Seiten integrieren, <b>+C nur auf einer Seite</b><br>
-<b>4.</b> Nach y auflösen (Entlogarithmieren)</p>
-<p>Merke: ∫ 1/y dy = ln|y|, und e^(… + C) wird zu C·e^(…).</p>
-    <div class="ex"><b>Beispiel:</b><br>y′ = 2x·y<br>dy/y = 2x dx<br>ln|y| = x² + C<br>y = C·e^(x²)</div>
+<svg viewBox="0 0 340 240" class="fig" xmlns="http://www.w3.org/2000/svg"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ahf"/></marker></defs><rect x="30" y="6" width="280" height="42" rx="10" class="bx"/><text x="170" y="32" text-anchor="middle" class="" style="font-size:16px">① dy/dx = f(x)·g(y)</text><line x1="170" y1="50" x2="170" y2="62" class="ar" marker-end="url(#ah)"/><rect x="30" y="64" width="280" height="42" rx="10" class="bx"/><text x="170" y="90" text-anchor="middle" class="" style="font-size:16px">② dy / g(y) = f(x) dx</text><line x1="170" y1="108" x2="170" y2="120" class="ar" marker-end="url(#ah)"/><rect x="30" y="122" width="280" height="42" rx="10" class="bx"/><text x="170" y="148" text-anchor="middle" class="" style="font-size:16px">③ ∫ links = ∫ rechts + C</text><line x1="170" y1="166" x2="170" y2="178" class="ar" marker-end="url(#ah)"/><rect x="30" y="180" width="280" height="42" rx="10" class="bxg"/><text x="170" y="206" text-anchor="middle" class="" style="font-size:16px">④ nach y auflösen</text></svg><p class="ct">Geht nur, wenn x-Teil und y-Teil ein <b>Produkt</b> sind.</p><svg viewBox="0 0 340 200" class="fig" xmlns="http://www.w3.org/2000/svg"><text x="20" y="32" text-anchor="start" class="big">y′ = <tspan class="bl">y</tspan> · <tspan class="or">2x</tspan></text><text x="20" y="78" text-anchor="start" class="big"><tspan class="bl">dy / y</tspan> = <tspan class="or">2x dx</tspan></text><text x="330" y="78" text-anchor="end" class="mt" style="font-size:13px">trennen</text><text x="20" y="124" text-anchor="start" class="big"><tspan class="bl">ln|y|</tspan> = <tspan class="or">x²</tspan> + C</text><text x="330" y="124" text-anchor="end" class="mt" style="font-size:13px">integrieren</text><text x="20" y="170" text-anchor="start" class="big">y = C · e^(x²)</text><text x="330" y="170" text-anchor="end" class="mt" style="font-size:13px">auflösen</text></svg><p class="ct"><span style="color:#3b82f6"><b>y-Seite</b></span> links, <span style="color:#f59e0b"><b>x-Seite</b></span> rechts.</p><svg viewBox="0 0 340 185" class="fig" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="8" width="320" height="48" rx="10" class="bxg"/><text x="170" y="37" text-anchor="middle" class="big">∫ 1/y dy = ln|y|</text><rect x="10" y="68" width="320" height="48" rx="10" class="bxg"/><text x="170" y="97" text-anchor="middle" class="big">e^(x + C) = C · e^x</text><rect x="10" y="128" width="320" height="48" rx="10" class="bx"/><text x="170" y="157" text-anchor="middle" class="big">∫ 1/(a − y) dy = −ln|a − y|</text></svg><p class="ct">Die 3 Regeln, die du dafür fast immer brauchst.</p>
   </div>
   <button class="btn go" id="start">Los geht's →</button>
 </section>
@@ -95,7 +112,7 @@ function ask(){
   var x=Q[i];$("cnt").textContent="Frage "+(i+1)+" von "+Q.length;
   $("bar").style.width=(i/Q.length*100)+"%";
   $("rep").classList.toggle("hide",!x.rep);
-  $("q").textContent=x.q;$("fb").className="fb hide";$("next").classList.add("hide");
+  $("q").textContent=x.q;if(x.img){var im=document.createElement("div");im.innerHTML=x.img;$("q").appendChild(im)}$("fb").className="fb hide";$("next").classList.add("hide");
   var a=$("ans");a.innerHTML="";
   if(x.t==="mc"){x.o.forEach(function(o,k){var b=document.createElement("button");b.className="btn";b.textContent=o;b.onclick=function(){done(k===x.a,b)};a.appendChild(b)})}
   else{

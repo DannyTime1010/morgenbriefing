@@ -28,6 +28,29 @@ input.in{width:100%;min-height:54px;padding:12px;font-size:20px;border-radius:14
 .mut{color:var(--mut);font-size:15px}
 .res{font-family:ui-monospace,monospace;background:var(--bd);padding:12px;border-radius:12px;word-break:break-all}
 .rep{display:inline-block;font-size:13px;background:#ffb02e;color:#222;border-radius:8px;padding:2px 8px;margin-bottom:6px}
+
+.fig{width:100%;height:auto;display:block;margin:4px 0 10px}
+.fig text{paint-order:stroke;stroke:var(--card);stroke-width:4px;stroke-linejoin:round;fill:var(--tx);font-family:system-ui,-apple-system,sans-serif;font-size:15px}
+.fig .big{font-size:19px;font-weight:700}
+.fig .mt{fill:var(--mut)}
+.fig .hlt,.fig tspan.hlt{fill:var(--acd);font-weight:700}
+.fig .badt{fill:var(--bad);font-weight:700}
+.fig tspan.bl{fill:#3b82f6;font-weight:700}.fig tspan.or{fill:#f59e0b;font-weight:700}
+.fig .bx{fill:var(--card);stroke:var(--bd);stroke-width:2}
+.fig .bxg{fill:var(--okbg);stroke:var(--ac);stroke-width:2}
+.fig .bxr{fill:var(--badbg);stroke:var(--bad);stroke-width:2}
+.fig .ar{stroke:var(--mut);stroke-width:2}.fig .ahf{fill:var(--mut)}
+.fig .ax{stroke:var(--mut);stroke-width:1.2}
+.fig .cv{fill:none;stroke:var(--mut);stroke-width:2;opacity:.55}
+.fig .cvh{fill:none;stroke:var(--ac);stroke-width:3.5}
+.fig .fl{stroke:#3b82f6;stroke-width:1.8;stroke-linecap:round}
+.fig .dash{stroke:var(--bad);stroke-width:1.5;stroke-dasharray:5 4}
+.fig .dt{fill:var(--ac);stroke:var(--card);stroke-width:2}
+.fig .acl{stroke:var(--ac);stroke-width:2}
+.fig .bad{stroke:var(--bad);stroke-width:3}
+.ct{font-size:18px;margin:4px 2px 0}
+.dots{display:flex;gap:6px;justify-content:center;margin:6px 0}
+.dots i{width:9px;height:9px;border-radius:50%;background:var(--bd)}.dots i.on{background:var(--ac)}
 </style>
 </head>
 <body>
@@ -38,13 +61,7 @@ input.in{width:100%;min-height:54px;padding:12px;font-size:20px;border-radius:14
 <!-- 1) ERKLÄRUNG -->
 <section id="intro">
   <div class="card">
-    <p>Gemischte Wiederholung von heute: Begriffe, Text → DGL, Richtungsfeld, Trennen der Variablen.</p>
-<p>Kurz-Check im Kopf:<br>
-• Ordnung = höchste Ableitung<br>
-• allgemein = Schar mit C, speziell = C festgelegt<br>
-• y′ = f(x)·g(y) → trennen, integrieren, auflösen<br>
-• ∫ 1/y dy = ln|y|</p>
-    <div class="ex"><b>Beispiel:</b><br>y′ = −2y → y = C·e^(−2x)<br>y(0) = 7 → y = 7·e^(−2x)</div>
+<svg viewBox="0 0 340 180" class="fig" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="6" width="160" height="76" rx="12" class="bx"/><text x="86" y="36" text-anchor="middle" class="hlt" style="font-size:16px">Ordnung</text><text x="86" y="62" text-anchor="middle" class="" style="font-size:14px">höchste Ableitung</text><rect x="174" y="6" width="160" height="76" rx="12" class="bx"/><text x="254" y="36" text-anchor="middle" class="hlt" style="font-size:16px">allgemein</text><text x="254" y="62" text-anchor="middle" class="" style="font-size:14px">Schar mit C</text><rect x="6" y="90" width="160" height="76" rx="12" class="bx"/><text x="86" y="120" text-anchor="middle" class="hlt" style="font-size:16px">trennbar?</text><text x="86" y="146" text-anchor="middle" class="" style="font-size:14px">y′ = f(x)·g(y)</text><rect x="174" y="90" width="160" height="76" rx="12" class="bx"/><text x="254" y="120" text-anchor="middle" class="hlt" style="font-size:16px">Integral</text><text x="254" y="146" text-anchor="middle" class="" style="font-size:14px">∫1/y dy = ln|y|</text></svg><p class="ct">🔁 Alles von heute gemischt. Los!</p>
   </div>
   <button class="btn go" id="start">Los geht's →</button>
 </section>
@@ -95,7 +112,7 @@ function ask(){
   var x=Q[i];$("cnt").textContent="Frage "+(i+1)+" von "+Q.length;
   $("bar").style.width=(i/Q.length*100)+"%";
   $("rep").classList.toggle("hide",!x.rep);
-  $("q").textContent=x.q;$("fb").className="fb hide";$("next").classList.add("hide");
+  $("q").textContent=x.q;if(x.img){var im=document.createElement("div");im.innerHTML=x.img;$("q").appendChild(im)}$("fb").className="fb hide";$("next").classList.add("hide");
   var a=$("ans");a.innerHTML="";
   if(x.t==="mc"){x.o.forEach(function(o,k){var b=document.createElement("button");b.className="btn";b.textContent=o;b.onclick=function(){done(k===x.a,b)};a.appendChild(b)})}
   else{

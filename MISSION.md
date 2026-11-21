@@ -24,4 +24,4 @@ Alle Buch-Beispiele vom Stoffzettel ohne Lösung lösbar sind und die Probe-SA (
 - Do 26.11.: Schularbeit
 
 ## Stil
-Duolingo-mäßig: viele kurze Lektionen, jeder Tag endet mit einer Wiederholungs-Lektion, Basics kommen in jeder Lektion als 🔁-Fragen wieder. Nach jeder Lektion 1–2 Buchbeispiele auf Papier.
+Lernt besser mit Grafiken und kurzen Texten → Erklärung als kurze Karten mit je einer Grafik. Duolingo-mäßig: viele kurze Lektionen, jeder Tag endet mit einer Wiederholungs-Lektion, Basics kommen in jeder Lektion als 🔁-Fragen wieder. Nach jeder Lektion 1–2 Buchbeispiele auf Papier.
