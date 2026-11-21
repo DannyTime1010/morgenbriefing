@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Spickzettel</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--tx:#1f2430;--mut:#6b7280;--ac:#58cc02;--bd:#e5e7eb}
+@media(prefers-color-scheme:dark){:root{--bg:#131820;--card:#1d242f;--tx:#eef1f6;--mut:#9aa4b2;--bd:#2c3542}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:18px/1.5 system-ui,-apple-system,sans-serif;padding:16px;max-width:640px;margin-inline:auto}
+h1{font-size:26px}a.back{display:inline-block;padding:12px 0;color:var(--ac);text-decoration:none;font-weight:600}
+input{width:100%;padding:14px;font-size:18px;border-radius:12px;border:1px solid var(--bd);background:var(--card);color:var(--tx);margin-bottom:12px}
+.t{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:10px}
+.t b{display:block;font-size:19px}.t span{color:var(--mut);font-size:14px}
+.empty{color:var(--mut);text-align:center;padding:24px}
+</style>
+</head>
+<body>
+<a class="back" href="index.html">← Zurück</a>
+<h1>📖 Spickzettel</h1>
+<input id="q" placeholder="Suchen…" type="search">
+<div id="list"></div>
+<script>
+// Claude ergänzt hier pro Lektion neue Begriffe: {t:"Begriff", d:"Kurze Definition", l:"01"}
+var TERMS=[];
+var list=document.getElementById('list'),q=document.getElementById('q');
+function esc(s){return String(s).replace(/[&<>]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})}
+function render(){
+  var f=q.value.toLowerCase(),r=TERMS.filter(function(x){return (x.t+' '+x.d).toLowerCase().indexOf(f)>-1})
+    .sort(function(a,b){return a.t.localeCompare(b.t,'de')});
+  list.innerHTML=r.length?r.map(function(x){return '<div class="t"><b>'+esc(x.t)+'</b>'+esc(x.d)+(x.l?' <span>· Lektion '+esc(x.l)+'</span>':'')+'</div>'}).join(''):'<div class="empty">Noch keine Begriffe.</div>';
+}
+q.oninput=render;render();
+</script>
+</body>
+</html>

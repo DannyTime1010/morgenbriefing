@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lernen</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--tx:#1f2430;--mut:#6b7280;--ac:#58cc02;--acd:#46a302;--bd:#e5e7eb}
+@media(prefers-color-scheme:dark){:root{--bg:#131820;--card:#1d242f;--tx:#eef1f6;--mut:#9aa4b2;--bd:#2c3542}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:18px/1.5 system-ui,-apple-system,sans-serif;padding:16px;max-width:640px;margin-inline:auto}
+h1{font-size:26px;margin:8px 0 12px}
+.stats{display:flex;gap:10px;margin-bottom:16px}
+.stat{flex:1;background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:12px;text-align:center}
+.stat b{display:block;font-size:26px}.stat span{color:var(--mut);font-size:14px}
+a.l{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:16px;margin-bottom:10px;color:inherit;text-decoration:none;min-height:60px}
+a.l.next{border:2px solid var(--ac)}
+.n{width:40px;height:40px;border-radius:50%;background:var(--bd);display:grid;place-items:center;font-weight:700;flex:none}
+.done .n{background:var(--ac);color:#fff}
+.sc{margin-left:auto;color:var(--mut);font-size:14px}
+.top{display:flex;gap:10px;margin-top:16px}
+.top a{flex:1;text-align:center;padding:14px;border-radius:14px;background:var(--card);border:1px solid var(--bd);color:inherit;text-decoration:none}
+.empty{color:var(--mut);text-align:center;padding:24px}
+small{color:var(--mut)}
+</style>
+</head>
+<body>
+<h1>📚 Mein Lernpfad</h1>
+<div class="stats">
+  <div class="stat"><b id="streak">0</b><span>🔥 Streak</span></div>
+  <div class="stat"><b id="xp">0</b><span>⭐ XP</span></div>
+  <div class="stat"><b id="cnt">0</b><span>✅ Lektionen</span></div>
+</div>
+<div id="list"></div>
+<div class="top"><a href="glossary.html">📖 Spickzettel</a></div>
+<p><small>Stand: <span id="asof"></span>. Streak/XP = Maximum aus Chat-Stand und diesem Gerät.</small></p>
+
+<!-- Claude aktualisiert diesen Datenblock am Ende jeder Session aus progress.json -->
+<script id="data" type="application/json">
+{"streak":0,"xp":0,"asof":null,"lessons":[]}
+</script>
+<script>
+// lessons: [{"id":"01","file":"lessons/01-titel.html","title":"...","score":"6/8" oder null}]
+var D=JSON.parse(document.getElementById('data').textContent),L={};
+try{L=JSON.parse(localStorage.getItem('lern')||'{}')}catch(e){}
+var xp=Math.max(D.xp||0,L.xp||0),st=Math.max(D.streak||0,streakNow());
+function streakNow(){
+  if(!L.last)return 0;var d=(new Date(today())-new Date(L.last))/864e5;
+  return d<=1?(L.streak||0):0;
+}
+function today(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+document.getElementById('streak').textContent=st;
+document.getElementById('xp').textContent=xp;
+document.getElementById('asof').textContent=D.asof||'noch nichts';
+var list=document.getElementById('list'),done=0,nextSet=false;
+if(!D.lessons.length)list.innerHTML='<div class="empty">Noch keine Lektionen.<br>Starte eine Session im Chat 🚀</div>';
+D.lessons.forEach(function(x){
+  var ld=(L.done||{})[x.id],sc=x.score||(ld&&ld.score),ok=!!sc;
+  if(ok)done++;
+  var a=document.createElement('a');a.href=x.file;
+  a.className='l'+(ok?' done':'')+(!ok&&!nextSet?' next':'');
+  if(!ok)nextSet=true;
+  a.innerHTML='<div class="n">'+(ok?'✓':x.id)+'</div><div>'+x.title+'</div><div class="sc">'+(sc||'')+'</div>';
+  list.appendChild(a);
+});
+document.getElementById('cnt').textContent=done;
+</script>
+</body>
+</html>
