@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lernen · DGL</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--tx:#1f2430;--mut:#6b7280;--ac:#58cc02;--acd:#46a302;--bd:#e5e7eb;--okbg:#e7f9d4}
+@media(prefers-color-scheme:dark){:root{--bg:#131820;--card:#1d242f;--tx:#eef1f6;--mut:#9aa4b2;--bd:#2c3542;--okbg:#1f3a14}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:18px/1.5 system-ui,-apple-system,sans-serif;padding:16px;max-width:640px;margin-inline:auto}
+h1{font-size:24px;margin:4px 0 4px}
+.mut{color:var(--mut);font-size:15px}
+.stats{display:flex;gap:10px;margin:14px 0}
+.stat{flex:1;background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:12px;text-align:center}
+.stat b{display:block;font-size:26px}
+a.ls{display:flex;align-items:center;gap:12px;background:var(--card);border:2px solid var(--bd);border-bottom-width:4px;border-radius:14px;padding:14px;margin:10px 0;color:var(--tx);text-decoration:none;min-height:60px}
+a.ls.done{background:var(--okbg);border-color:var(--ac)}
+a.ls.lock{opacity:.5;pointer-events:none}
+.n{font-weight:800;min-width:34px}
+.sc{margin-left:auto;font-size:14px;color:var(--mut)}
+.top{display:flex;justify-content:space-between;align-items:center}
+.top a{color:var(--ac);font-weight:600;text-decoration:none}
+</style>
+</head>
+<body>
+<div class="top"><h1>DGL · 1. AM-SA</h1><a href="glossary.html">Glossar →</a></div>
+<div class="mut" id="sa"></div>
+<div class="stats">
+  <div class="stat">🔥<b id="streak">0</b><span class="mut">Streak</span></div>
+  <div class="stat">⭐<b id="xp">0</b><span class="mut">XP</span></div>
+  <div class="stat">✅<b id="cnt">0</b><span class="mut">Lektionen</span></div>
+</div>
+<div id="list"></div>
+
+<script>
+/* DATA-START (wird vom Coach aktualisiert) */
+var DATA={
+  "exam":"2026-11-26",
+  "streak":1,"xp":0,
+  "completed":{},
+  "lessons":[
+    {"id":"01","title":"Grundbegriffe: Ordnung, allgemeine & spezielle Lösung","file":"lessons/01-grundbegriffe-dgl.html"},
+    {"id":"02","title":"Richtungsfeld & Linienelemente","file":null},
+    {"id":"03","title":"Trennen der Variablen","file":null},
+    {"id":"04","title":"Exponentielles & beschränktes Wachstum","file":null},
+    {"id":"05","title":"Textbeispiele: Newton-Abkühlung & Bewegung","file":null},
+    {"id":"06","title":"Lineare DGL 1. Ordnung: homogen, inhomogen","file":null},
+    {"id":"07","title":"Störterm-Ansätze & Koeffizientenvergleich","file":null},
+    {"id":"08","title":"RC- und RL-Glied","file":null},
+    {"id":"09","title":"Variation der Konstanten","file":null},
+    {"id":"10","title":"Probe-Schularbeit (gemischt)","file":null}
+  ]
+};
+/* DATA-END */
+var L={};try{L=JSON.parse(localStorage.getItem("lern")||"{}")}catch(e){}
+var done=Object.assign({},DATA.completed,L.done||{});
+document.getElementById("streak").textContent=Math.max(DATA.streak,L.streak||0);
+document.getElementById("xp").textContent=Math.max(DATA.xp,L.xp||0);
+document.getElementById("cnt").textContent=Object.keys(done).length+"/"+DATA.lessons.length;
+var d=Math.ceil((new Date(DATA.exam)-new Date(new Date().toDateString()))/864e5);
+document.getElementById("sa").textContent=d>0?"Schularbeit in "+d+" Tag"+(d===1?"":"en"):"Schularbeit: "+DATA.exam;
+var h="";DATA.lessons.forEach(function(x){
+  var c=done[x.id];var cls=c?"ls done":(x.file?"ls":"ls lock");
+  h+='<a class="'+cls+'" href="'+(x.file||"#")+'"><span class="n">'+x.id+'</span><span>'+x.title+'</span><span class="sc">'+(c?"✓ "+c.score:(x.file?"neu":"🔒"))+'</span></a>';
+});
+document.getElementById("list").innerHTML=h;
+</script>
+</body>
+</html>

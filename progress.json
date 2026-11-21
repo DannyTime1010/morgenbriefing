@@ -1,0 +1,22 @@
+{
+  "pages_url": "https://dannytime1010.github.io/morgenbriefing/",
+  "streak": 1,
+  "best_streak": 1,
+  "last_active": "2026-11-21",
+  "xp": 0,
+  "completed": [],
+  "mistakes": [],
+  "reviews": [],
+  "roadmap": [
+    {"id": "01", "title": "Grundbegriffe: Ordnung, allgemeine & spezielle Lösung"},
+    {"id": "02", "title": "Richtungsfeld & Linienelemente"},
+    {"id": "03", "title": "Trennen der Variablen"},
+    {"id": "04", "title": "Exponentielles & beschränktes Wachstum"},
+    {"id": "05", "title": "Textbeispiele: Newton-Abkühlung & Bewegung"},
+    {"id": "06", "title": "Lineare DGL 1. Ordnung: homogen, inhomogen, y = yh + yp"},
+    {"id": "07", "title": "Störterm-Ansätze & Koeffizientenvergleich"},
+    {"id": "08", "title": "RC- und RL-Glied"},
+    {"id": "09", "title": "Variation der Konstanten"},
+    {"id": "10", "title": "Probe-Schularbeit (gemischt)"}
+  ]
+}
