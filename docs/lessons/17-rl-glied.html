@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>L17 · RL-Glied</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--tx:#1f2430;--mut:#6b7280;--ac:#58cc02;--acd:#46a302;--bad:#ea2b2b;--bd:#e5e7eb;--okbg:#e7f9d4;--badbg:#ffe1e1}
+@media(prefers-color-scheme:dark){:root{--bg:#131820;--card:#1d242f;--tx:#eef1f6;--mut:#9aa4b2;--bd:#2c3542;--okbg:#1f3a14;--badbg:#3f1b1b}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:18px/1.55 system-ui,-apple-system,sans-serif;padding:16px;max-width:640px;margin-inline:auto;padding-bottom:120px}
+a.back{display:inline-block;padding:10px 0;color:var(--ac);text-decoration:none;font-weight:600}
+h1{font-size:24px;margin:4px 0 12px}
+.bar{height:10px;background:var(--bd);border-radius:5px;overflow:hidden;margin:8px 0 16px}
+.bar i{display:block;height:100%;width:0;background:var(--ac);transition:width .3s}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:16px;margin-bottom:14px}
+.ex{background:var(--okbg);border-radius:12px;padding:12px;margin-top:10px}
+code{background:var(--bd);padding:1px 6px;border-radius:6px}
+.btn{display:block;width:100%;min-height:54px;padding:14px;font-size:18px;font-weight:700;border-radius:14px;border:2px solid var(--bd);border-bottom-width:4px;background:var(--card);color:var(--tx);margin:10px 0;text-align:left;cursor:pointer}
+.btn.go{background:var(--ac);border-color:var(--acd);color:#fff;text-align:center}
+.btn.ok{background:var(--okbg);border-color:var(--ac)}
+.btn.no{background:var(--badbg);border-color:var(--bad)}
+.btn:disabled{opacity:1;cursor:default}
+input.in{width:100%;min-height:54px;padding:12px;font-size:20px;border-radius:14px;border:2px solid var(--bd);background:var(--card);color:var(--tx)}
+.fb{border-radius:14px;padding:14px;margin-top:12px}
+.fb.ok{background:var(--okbg)}.fb.no{background:var(--badbg)}
+.hide{display:none}
+.mut{color:var(--mut);font-size:15px}
+.res{font-family:ui-monospace,monospace;background:var(--bd);padding:12px;border-radius:12px;word-break:break-all}
+.rep{display:inline-block;font-size:13px;background:#ffb02e;color:#222;border-radius:8px;padding:2px 8px;margin-bottom:6px}
+
+.fig{width:100%;height:auto;display:block;margin:4px 0 10px}
+.fig text{paint-order:stroke;stroke:var(--card);stroke-width:4px;stroke-linejoin:round;fill:var(--tx);font-family:system-ui,-apple-system,sans-serif;font-size:15px}
+.fig .big{font-size:19px;font-weight:700}
+.fig .mt{fill:var(--mut)}
+.fig .hlt,.fig tspan.hlt{fill:var(--acd);font-weight:700}
+.fig .badt{fill:var(--bad);font-weight:700}
+.fig tspan.bl{fill:#3b82f6;font-weight:700}.fig tspan.or{fill:#f59e0b;font-weight:700}
+.fig .bx{fill:var(--card);stroke:var(--bd);stroke-width:2}
+.fig .bxg{fill:var(--okbg);stroke:var(--ac);stroke-width:2}
+.fig .bxr{fill:var(--badbg);stroke:var(--bad);stroke-width:2}
+.fig .ar{stroke:var(--mut);stroke-width:2}.fig .ahf{fill:var(--mut)}
+.fig .ax{stroke:var(--mut);stroke-width:1.2}
+.fig .cv{fill:none;stroke:var(--mut);stroke-width:2;opacity:.55}
+.fig .cvh{fill:none;stroke:var(--ac);stroke-width:3.5}
+.fig .fl{stroke:#3b82f6;stroke-width:1.8;stroke-linecap:round}
+.fig .dash{stroke:var(--bad);stroke-width:1.5;stroke-dasharray:5 4}
+.fig .dt{fill:var(--ac);stroke:var(--card);stroke-width:2}
+.fig .acl{stroke:var(--ac);stroke-width:2}
+.fig .bad{stroke:var(--bad);stroke-width:3}
+.ct{font-size:18px;margin:4px 2px 0}
+.dots{display:flex;gap:6px;justify-content:center;margin:6px 0}
+.dots i{width:9px;height:9px;border-radius:50%;background:var(--bd)}.dots i.on{background:var(--ac)}
+
+.fig .cvr{fill:none;stroke:var(--bad);stroke-width:3}
+.fig .cvo{fill:none;stroke:#f59e0b;stroke-width:3}
+.fig .cvb{fill:none;stroke:#3b82f6;stroke-width:3}
+.fig .ort{fill:#d97706;font-weight:700}.fig .blt{fill:#3b82f6;font-weight:700}
+.fig .wire{fill:none;stroke:var(--tx);stroke-width:2}
+.fig .wire3{stroke:var(--tx);stroke-width:4}
+.fig .bgr{fill:var(--card);stroke:none}
+.fig .bxk{fill:var(--bd);stroke:var(--tx);stroke-width:2}
+.fig .fa{stroke:var(--ac);stroke-width:4}.fig .fr{stroke:var(--bad);stroke-width:4}
+</style>
+</head>
+<body>
+<a class="back" href="../index.html">← Übersicht</a>
+<h1 id="ttl">L17 · RL-Glied</h1>
+<div class="bar"><i id="bar"></i></div>
+
+<!-- 1) ERKLÄRUNG -->
+<section id="intro">
+  <div class="card">
+<svg viewBox="0 0 345 165" class="fig" xmlns="http://www.w3.org/2000/svg"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ahf"/></marker></defs><polyline points="40,40 40,150 300,150 300,40 210,40" class="wire"/><line x1="40" y1="40" x2="70" y2="40" class="wire"/><line x1="70" y1="40" x2="96" y2="26" class="wire"/><line x1="100" y1="40" x2="130" y2="40" class="wire"/><text x="84" y="18" text-anchor="middle" class="mt" style="font-size:12px">t = 0</text><rect x="130" y="28" width="80" height="24" rx="4" class="bx"/><text x="170" y="45" text-anchor="middle" class="big">R</text><circle cx="40" cy="95" r="18" class="bx"/><text x="40" y="101" text-anchor="middle" class="" style="font-size:13px">u(t)</text><rect x="290" y="66" width="20" height="58" rx="4" class="bxk"/><text x="322" y="100" text-anchor="start" class="big">L</text><text x="170" y="72" text-anchor="middle" class="hlt" style="font-size:14px">u_R = R·i</text><text x="232" y="98" text-anchor="end" class="hlt" style="font-size:14px">u_L</text></svg><p class="ct">u_R + u_L = u(t), mit <b>u_L = L·di/dt</b></p><svg viewBox="0 0 340 120" class="fig" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="8" width="320" height="50" rx="10" class="bxg"/><text x="170" y="38" text-anchor="middle" class="big">L·di/dt + R·i = u(t)</text><rect x="60" y="68" width="220" height="44" rx="10" class="bx"/><text x="170" y="95" text-anchor="middle" class="big">τ = L / R</text></svg><p class="ct">Einschalten mit U₀: i(t) = U₀/R·(1 − e^(−t/τ)). Endstrom U₀/R.</p><svg viewBox="0 0 340 220" class="fig" xmlns="http://www.w3.org/2000/svg"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ahf"/></marker></defs><line x1="24" y1="196" x2="316" y2="196" class="ax"/><line x1="24" y1="196" x2="24" y2="24" class="ax"/><text x="312" y="190" text-anchor="end" class="mt" style="font-size:13px">t</text><text x="30" y="36" text-anchor="start" class="mt" style="font-size:13px"></text><line x1="24" y1="48.5714" x2="316" y2="48.5714" class="dash"/><rect x="196" y="22.5714" width="118" height="22" rx="6" class="bx"/><text x="255" y="38.5714" text-anchor="middle" class="badt" style="font-size:14px">U₀ = 12 V</text><polyline points="24.0,48.6 25.8,53.1 27.6,57.5 29.5,61.8 31.3,65.9 33.1,69.9 35.0,73.8 36.8,77.5 38.6,81.2 40.4,84.7 42.2,88.1 44.1,91.5 45.9,94.7 47.7,97.8 49.5,100.8 51.4,103.7 53.2,106.6 55.0,109.3 56.9,112.0 58.7,114.6 60.5,117.1 62.3,119.5 64.2,121.9 66.0,124.1 67.8,126.4 69.6,128.5 71.5,130.6 73.3,132.6 75.1,134.5 76.9,136.4 78.8,138.3 80.6,140.0 82.4,141.8 84.2,143.4 86.1,145.1 87.9,146.6 89.7,148.1 91.5,149.6 93.3,151.0 95.2,152.4 97.0,153.8 98.8,155.1 100.7,156.3 102.5,157.5 104.3,158.7 106.1,159.9 108.0,161.0 109.8,162.1 111.6,163.1 113.4,164.1 115.2,165.1 117.1,166.0 118.9,167.0 120.7,167.9 122.6,168.7 124.4,169.6 126.2,170.4 128.0,171.2 129.9,171.9 131.7,172.7 133.5,173.4 135.3,174.1 137.2,174.8 139.0,175.4 140.8,176.0 142.6,176.7 144.4,177.3 146.3,177.8 148.1,178.4 149.9,178.9 151.8,179.5 153.6,180.0 155.4,180.5 157.2,180.9 159.1,181.4 160.9,181.9 162.7,182.3 164.5,182.7 166.3,183.1 168.2,183.5 170.0,183.9 171.8,184.3 173.7,184.6 175.5,185.0 177.3,185.3 179.1,185.6 180.9,186.0 182.8,186.3 184.6,186.6 186.4,186.9 188.2,187.1 190.1,187.4 191.9,187.7 193.7,187.9 195.6,188.2 197.4,188.4 199.2,188.7 201.0,188.9 202.9,189.1 204.7,189.3 206.5,189.5 208.3,189.7 210.2,189.9 212.0,190.1 213.8,190.3 215.6,190.5 217.5,190.6 219.3,190.8 221.1,191.0 222.9,191.1 224.8,191.3 226.6,191.4 228.4,191.5 230.2,191.7 232.1,191.8 233.9,191.9 235.7,192.1 237.5,192.2 239.4,192.3 241.2,192.4 243.0,192.5 244.8,192.6 246.7,192.7 248.5,192.8 250.3,192.9 252.1,193.0 254.0,193.1 255.8,193.2 257.6,193.3 259.4,193.4 261.2,193.5 263.1,193.5 264.9,193.6 266.7,193.7 268.6,193.8 270.4,193.8 272.2,193.9 274.0,194.0 275.9,194.0 277.7,194.1 279.5,194.1 281.3,194.2 283.2,194.3 285.0,194.3 286.8,194.4 288.6,194.4 290.5,194.5 292.3,194.5 294.1,194.6 295.9,194.6 297.8,194.6 299.6,194.7 301.4,194.7 303.2,194.8 305.1,194.8 306.9,194.8 308.7,194.9 310.5,194.9 312.4,194.9 314.2,195.0 316.0,195.0" class="cvr"/><polyline points="24.0,196.0 25.8,191.5 27.6,187.1 29.5,182.8 31.3,178.7 33.1,174.7 35.0,170.8 36.8,167.0 38.6,163.4 40.4,159.9 42.2,156.4 44.1,153.1 45.9,149.9 47.7,146.8 49.5,143.8 51.4,140.8 53.2,138.0 55.0,135.2 56.9,132.6 58.7,130.0 60.5,127.5 62.3,125.1 64.2,122.7 66.0,120.4 67.8,118.2 69.6,116.1 71.5,114.0 73.3,112.0 75.1,110.0 76.9,108.1 78.8,106.3 80.6,104.5 82.4,102.8 84.2,101.1 86.1,99.5 87.9,98.0 89.7,96.4 91.5,95.0 93.3,93.5 95.2,92.2 97.0,90.8 98.8,89.5 100.7,88.3 102.5,87.0 104.3,85.8 106.1,84.7 108.0,83.6 109.8,82.5 111.6,81.5 113.4,80.5 115.2,79.5 117.1,78.5 118.9,77.6 120.7,76.7 122.6,75.8 124.4,75.0 126.2,74.2 128.0,73.4 129.9,72.6 131.7,71.9 133.5,71.2 135.3,70.5 137.2,69.8 139.0,69.2 140.8,68.5 142.6,67.9 144.4,67.3 146.3,66.7 148.1,66.2 149.9,65.6 151.8,65.1 153.6,64.6 155.4,64.1 157.2,63.6 159.1,63.2 160.9,62.7 162.7,62.3 164.5,61.9 166.3,61.5 168.2,61.1 170.0,60.7 171.8,60.3 173.7,59.9 175.5,59.6 177.3,59.3 179.1,58.9 180.9,58.6 182.8,58.3 184.6,58.0 186.4,57.7 188.2,57.4 190.1,57.2 191.9,56.9 193.7,56.6 195.6,56.4 197.4,56.1 199.2,55.9 201.0,55.7 202.9,55.5 204.7,55.3 206.5,55.0 208.3,54.8 210.2,54.7 212.0,54.5 213.8,54.3 215.6,54.1 217.5,53.9 219.3,53.8 221.1,53.6 222.9,53.5 224.8,53.3 226.6,53.2 228.4,53.0 230.2,52.9 232.1,52.8 233.9,52.6 235.7,52.5 237.5,52.4 239.4,52.3 241.2,52.1 243.0,52.0 244.8,51.9 246.7,51.8 248.5,51.7 250.3,51.6 252.1,51.5 254.0,51.4 255.8,51.4 257.6,51.3 259.4,51.2 261.2,51.1 263.1,51.0 264.9,51.0 266.7,50.9 268.6,50.8 270.4,50.7 272.2,50.7 274.0,50.6 275.9,50.5 277.7,50.5 279.5,50.4 281.3,50.4 283.2,50.3 285.0,50.3 286.8,50.2 288.6,50.2 290.5,50.1 292.3,50.1 294.1,50.0 295.9,50.0 297.8,49.9 299.6,49.9 301.4,49.8 303.2,49.8 305.1,49.8 306.9,49.7 308.7,49.7 310.5,49.7 312.4,49.6 314.2,49.6 316.0,49.6" class="cvh"/><text x="41.52" y="153" text-anchor="start" class="badt" style="font-size:14px">u_L</text><text x="199.2" y="78.0571" text-anchor="start" class="hlt" style="font-size:14px">u_R = R·i</text></svg><p class="ct">u_L springt auf U₀ und fällt ab, u_R steigt auf U₀. (4.72: R = 50 Ω, L = 2 H)</p>
+  </div>
+  <button class="btn go" id="start">Los geht's →</button>
+</section>
+
+<!-- 2) QUIZ -->
+<section id="quiz" class="hide">
+  <div class="mut" id="cnt"></div>
+  <div class="card"><div id="rep" class="hide"><span class="rep">🔁 Wiederholung</span></div><div id="q"></div></div>
+  <div id="ans"></div>
+  <div id="fb" class="fb hide"></div>
+  <button class="btn go hide" id="next">Weiter →</button>
+</section>
+
+<!-- 3) ERGEBNIS -->
+<section id="end" class="hide">
+  <div class="card">
+    <h2 id="score"></h2>
+    <p id="xpmsg"></p>
+    <p class="mut">Schick mir diesen Code im Chat, dann trage ich es in dein progress.json ein:</p>
+    <div class="res" id="code"></div>
+    <button class="btn go" id="copy">📋 Code kopieren</button>
+  </div>
+  <a class="btn go" href="../index.html" style="text-decoration:none">Zur Übersicht</a>
+</section>
+
+<script>
+var LESSON_ID="17";
+/* Fragetypen:
+   {t:"mc",  q:"Frage", o:["A","B","C"], a:1, e:"Erklärung", topic:"Thema", rep:false}
+   {t:"fill",q:"Der ___ ist …", a:["antwort","alt. schreibweise"], e:"Erklärung", topic:"Thema"}
+   {t:"calc",q:"12·3 = ?", a:36, tol:0, e:"Rechenweg", topic:"Thema"}  */
+var Q=[
+  {t:"calc",q:"R = 50 Ω, L = 2 H. τ in Sekunden?",a:0.04,tol:0.0005,e:"τ = L/R = 2/50 = 0,04 s (4.72)",topic:"Zeitkonstante"},
+  {t:"calc",q:"U₀ = 12 V, R = 50 Ω. Endstrom in A?",a:0.24,tol:0.001,e:"i = U₀/R = 12/50 = 0,24 A",topic:"RL Endstrom"},
+  {t:"mc",q:"Lösung (Spule anfangs stromlos)?",o:["i = 0,24·e^(−25t)","i = 0,24·(1 − e^(−25t))","i = 12·(1 − e^(−25t))"],a:1,e:"i = U₀/R·(1 − e^(−R/L·t)), R/L = 25. (4.72)",topic:"RL einschalten"},
+  {t:"calc",q:"Berechne i(0,04 s) in A (3 Dezimalen).",a:0.152,tol:0.002,e:"0,24·(1 − e^(−1)) ≈ 0,152 A",topic:"RL einschalten"},
+  {t:"calc",q:"Welche Spannung u_L liegt nach langer Zeit an der Spule? (V)",a:0,tol:0,e:"di/dt → 0 → u_L = L·di/dt → 0. Alles fällt an R ab.",topic:"RL Endwerte"},
+  {t:"calc",q:"R = 20 Ω, L = 0,4 H, U₀ = 30 V. Endstrom in A?",a:1.5,tol:0.001,e:"30/20 = 1,5 A (4.74a)",topic:"RL Endstrom"},
+  {t:"mc",q:"Zeitkonstanten im Vergleich?",o:["RC: τ = R/C, RL: τ = L·R","RC: τ = R·C, RL: τ = L/R","beide τ = R·C"],a:1,e:"Merken: RC multiplizieren, RL dividieren.",topic:"Zeitkonstante"},
+  {t:"calc",q:"R = 10 kΩ, C = 10 µF. τ in s?",a:0.1,tol:0.001,e:"10⁴ · 10⁻⁵ = 0,1 s",topic:"Zeitkonstante",rep:true}
+];
+
+var i=0,right=0,wrong=[],$=function(id){return document.getElementById(id)};
+function show(id){["intro","quiz","end"].forEach(function(s){$(s).classList.toggle("hide",s!==id)})}
+$("start").onclick=function(){show("quiz");ask()};
+function norm(s){return String(s).trim().toLowerCase().replace(/\s+/g," ")}
+function ask(){
+  var x=Q[i];$("cnt").textContent="Frage "+(i+1)+" von "+Q.length;
+  $("bar").style.width=(i/Q.length*100)+"%";
+  $("rep").classList.toggle("hide",!x.rep);
+  $("q").textContent=x.q;$("fb").className="fb hide";$("next").classList.add("hide");
+  var a=$("ans");a.innerHTML="";
+  if(x.t==="mc"){x.o.forEach(function(o,k){var b=document.createElement("button");b.className="btn";b.textContent=o;b.onclick=function(){done(k===x.a,b)};a.appendChild(b)})}
+  else{
+    var inp=document.createElement("input");inp.className="in";inp.autocomplete="off";inp.autocapitalize="none";
+    if(x.t==="calc")inp.inputMode="decimal";
+    var b=document.createElement("button");b.className="btn go";b.textContent="Prüfen";
+    b.onclick=function(){
+      var v=inp.value;if(!v.trim())return;var ok;
+      if(x.t==="calc"){ok=Math.abs(parseFloat(v.replace(",","."))-x.a)<=(x.tol||0)}
+      else{ok=x.a.some(function(z){return norm(z)===norm(v)})}
+      inp.disabled=true;done(ok,b)};
+    a.appendChild(inp);a.appendChild(b);
+  }
+}
+function done(ok,btn){
+  var x=Q[i];
+  if(x.t==="mc"){var bs=$("ans").children;for(var k=0;k<bs.length;k++){bs[k].disabled=true;if(k===x.a)bs[k].classList.add("ok")}if(!ok)btn.classList.add("no")}
+  else btn.disabled=true;
+  if(ok)right++;else wrong.push(i+1);
+  var sol=x.t==="mc"?x.o[x.a]:(x.t==="calc"?x.a:x.a[0]);
+  var f=$("fb");f.className="fb "+(ok?"ok":"no");
+  f.innerHTML=(ok?"✅ <b>Richtig!</b> ":"❌ <b>Nicht ganz.</b> Richtig: <b>"+sol+"</b>. ")+"<br>"+x.e;
+  var n=$("next");n.classList.remove("hide");n.textContent=i===Q.length-1?"Ergebnis →":"Weiter →";
+  n.scrollIntoView({behavior:"smooth",block:"center"});
+}
+$("next").onclick=function(){i++;if(i<Q.length)ask();else finish()};
+function today(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function finish(){
+  $("bar").style.width="100%";show("end");
+  var xp=right*10+20+(right===Q.length?10:0);
+  var sc=right+"/"+Q.length;
+  $("score").textContent=(right===Q.length?"🎉 ":"👍 ")+sc+" richtig";
+  $("xpmsg").textContent="+"+xp+" XP";
+  var code="L"+LESSON_ID+" "+sc+(wrong.length?" falsch:"+wrong.join(","):"");
+  $("code").textContent=code;
+  $("copy").onclick=function(){
+    if(navigator.clipboard)navigator.clipboard.writeText(code).then(function(){$("copy").textContent="✓ Kopiert"},function(){});
+  };
+  try{
+    var L=JSON.parse(localStorage.getItem("lern")||"{}"),t=today();
+    L.done=L.done||{};
+    if(!L.done[LESSON_ID]){L.xp=(L.xp||0)+xp}
+    L.done[LESSON_ID]={score:sc,date:t};
+    if(L.last!==t){var d=L.last?(new Date(t)-new Date(L.last))/864e5:99;L.streak=d<=1?(L.streak||0)+1:1;L.last=t}
+    localStorage.setItem("lern",JSON.stringify(L));
+  }catch(e){}
+}
+</script>
+</body>
+</html>

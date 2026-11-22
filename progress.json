@@ -3,7 +3,7 @@
   "streak": 2,
   "best_streak": 2,
   "last_active": "2026-11-22",
-  "xp": 220,
+  "xp": 490,
   "completed": [
     {
       "id": "01",
@@ -16,19 +16,177 @@
       "title": "DGL aus Text aufstellen",
       "date": "2026-11-22",
       "score": "8/8"
+    },
+    {
+      "id": "03",
+      "title": "Richtungsfeld & Linienelemente",
+      "date": "2026-11-22",
+      "score": "5/8 → 8/8"
+    },
+    {
+      "id": "04",
+      "title": "Trennen der Variablen I",
+      "date": "2026-11-22",
+      "score": "4/8 → 8/8"
+    },
+    {
+      "id": "05",
+      "title": "Trennen der Variablen II: Anfangswerte & Fehler",
+      "date": "2026-11-22",
+      "score": "4/8 → 8/8"
+    },
+    {
+      "id": "06",
+      "title": "Wiederholung Tag 1",
+      "date": "2026-11-22",
+      "score": "6/8 → 8/8"
     }
   ],
-  "mistakes": [],
+  "mistakes": [
+    {
+      "lesson": "03",
+      "question": 2,
+      "topic": "Steigung im Richtungsfeld",
+      "date": "2026-11-22",
+      "count": 1
+    },
+    {
+      "lesson": "03",
+      "question": 4,
+      "topic": "Isoklinen",
+      "date": "2026-11-22",
+      "count": 1
+    },
+    {
+      "lesson": "03",
+      "question": 8,
+      "topic": "allgemeine vs. spezielle Lösung",
+      "date": "2026-11-22",
+      "count": 1
+    },
+    {
+      "lesson": "04",
+      "question": 2,
+      "topic": "Integral 1/y",
+      "date": "2026-11-22",
+      "count": 1
+    },
+    {
+      "lesson": "04",
+      "question": 5,
+      "topic": "Trennen der Variablen",
+      "date": "2026-11-22",
+      "count": 1
+    },
+    {
+      "lesson": "04",
+      "question": 6,
+      "topic": "lineare Substitution beim Integrieren",
+      "date": "2026-11-22",
+      "count": 1
+    },
+    {
+      "lesson": "04",
+      "question": 7,
+      "topic": "Integrationskonstante",
+      "date": "2026-11-22",
+      "count": 1
+    },
+    {
+      "lesson": "05",
+      "question": 3,
+      "topic": "Konstante aus Anfangsbedingung",
+      "date": "2026-11-22",
+      "count": 1
+    },
+    {
+      "lesson": "05",
+      "question": 4,
+      "topic": "Summe vs. Produkt beim Trennen",
+      "date": "2026-11-22",
+      "count": 1
+    },
+    {
+      "lesson": "05",
+      "question": 5,
+      "topic": "Summe vs. Produkt beim Trennen",
+      "date": "2026-11-22",
+      "count": 1
+    },
+    {
+      "lesson": "05",
+      "question": 7,
+      "topic": "Trennen der Variablen",
+      "date": "2026-11-22",
+      "count": 1
+    },
+    {
+      "lesson": "06",
+      "question": 7,
+      "topic": "Konstante aus Anfangsbedingung",
+      "date": "2026-11-22",
+      "count": 1
+    },
+    {
+      "lesson": "06",
+      "question": 8,
+      "topic": "lineare Substitution beim Integrieren",
+      "date": "2026-11-22",
+      "count": 1
+    }
+  ],
   "reviews": [
     {
-      "topic": "Ordnung & allgemeine/spezielle Lösung",
-      "lesson": "01",
+      "topic": "Steigung im Richtungsfeld",
+      "lesson": "03",
       "stage": 1,
       "due": "2026-11-23"
     },
     {
-      "topic": "DGL aus Text aufstellen",
-      "lesson": "02",
+      "topic": "Isoklinen",
+      "lesson": "03",
+      "stage": 1,
+      "due": "2026-11-23"
+    },
+    {
+      "topic": "allgemeine vs. spezielle Lösung",
+      "lesson": "03",
+      "stage": 1,
+      "due": "2026-11-23"
+    },
+    {
+      "topic": "Integral 1/y",
+      "lesson": "04",
+      "stage": 1,
+      "due": "2026-11-23"
+    },
+    {
+      "topic": "Trennen der Variablen",
+      "lesson": "04",
+      "stage": 1,
+      "due": "2026-11-23"
+    },
+    {
+      "topic": "lineare Substitution beim Integrieren",
+      "lesson": "04",
+      "stage": 1,
+      "due": "2026-11-23"
+    },
+    {
+      "topic": "Integrationskonstante",
+      "lesson": "04",
+      "stage": 1,
+      "due": "2026-11-23"
+    },
+    {
+      "topic": "Konstante aus Anfangsbedingung",
+      "lesson": "05",
+      "stage": 1,
+      "due": "2026-11-23"
+    },
+    {
+      "topic": "Summe vs. Produkt beim Trennen",
+      "lesson": "05",
       "stage": 1,
       "due": "2026-11-23"
     }

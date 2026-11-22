@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>L14 · Störterm sin/cos & Koeffizientenvergleich</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--tx:#1f2430;--mut:#6b7280;--ac:#58cc02;--acd:#46a302;--bad:#ea2b2b;--bd:#e5e7eb;--okbg:#e7f9d4;--badbg:#ffe1e1}
+@media(prefers-color-scheme:dark){:root{--bg:#131820;--card:#1d242f;--tx:#eef1f6;--mut:#9aa4b2;--bd:#2c3542;--okbg:#1f3a14;--badbg:#3f1b1b}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:18px/1.55 system-ui,-apple-system,sans-serif;padding:16px;max-width:640px;margin-inline:auto;padding-bottom:120px}
+a.back{display:inline-block;padding:10px 0;color:var(--ac);text-decoration:none;font-weight:600}
+h1{font-size:24px;margin:4px 0 12px}
+.bar{height:10px;background:var(--bd);border-radius:5px;overflow:hidden;margin:8px 0 16px}
+.bar i{display:block;height:100%;width:0;background:var(--ac);transition:width .3s}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:16px;margin-bottom:14px}
+.ex{background:var(--okbg);border-radius:12px;padding:12px;margin-top:10px}
+code{background:var(--bd);padding:1px 6px;border-radius:6px}
+.btn{display:block;width:100%;min-height:54px;padding:14px;font-size:18px;font-weight:700;border-radius:14px;border:2px solid var(--bd);border-bottom-width:4px;background:var(--card);color:var(--tx);margin:10px 0;text-align:left;cursor:pointer}
+.btn.go{background:var(--ac);border-color:var(--acd);color:#fff;text-align:center}
+.btn.ok{background:var(--okbg);border-color:var(--ac)}
+.btn.no{background:var(--badbg);border-color:var(--bad)}
+.btn:disabled{opacity:1;cursor:default}
+input.in{width:100%;min-height:54px;padding:12px;font-size:20px;border-radius:14px;border:2px solid var(--bd);background:var(--card);color:var(--tx)}
+.fb{border-radius:14px;padding:14px;margin-top:12px}
+.fb.ok{background:var(--okbg)}.fb.no{background:var(--badbg)}
+.hide{display:none}
+.mut{color:var(--mut);font-size:15px}
+.res{font-family:ui-monospace,monospace;background:var(--bd);padding:12px;border-radius:12px;word-break:break-all}
+.rep{display:inline-block;font-size:13px;background:#ffb02e;color:#222;border-radius:8px;padding:2px 8px;margin-bottom:6px}
+
+.fig{width:100%;height:auto;display:block;margin:4px 0 10px}
+.fig text{paint-order:stroke;stroke:var(--card);stroke-width:4px;stroke-linejoin:round;fill:var(--tx);font-family:system-ui,-apple-system,sans-serif;font-size:15px}
+.fig .big{font-size:19px;font-weight:700}
+.fig .mt{fill:var(--mut)}
+.fig .hlt,.fig tspan.hlt{fill:var(--acd);font-weight:700}
+.fig .badt{fill:var(--bad);font-weight:700}
+.fig tspan.bl{fill:#3b82f6;font-weight:700}.fig tspan.or{fill:#f59e0b;font-weight:700}
+.fig .bx{fill:var(--card);stroke:var(--bd);stroke-width:2}
+.fig .bxg{fill:var(--okbg);stroke:var(--ac);stroke-width:2}
+.fig .bxr{fill:var(--badbg);stroke:var(--bad);stroke-width:2}
+.fig .ar{stroke:var(--mut);stroke-width:2}.fig .ahf{fill:var(--mut)}
+.fig .ax{stroke:var(--mut);stroke-width:1.2}
+.fig .cv{fill:none;stroke:var(--mut);stroke-width:2;opacity:.55}
+.fig .cvh{fill:none;stroke:var(--ac);stroke-width:3.5}
+.fig .fl{stroke:#3b82f6;stroke-width:1.8;stroke-linecap:round}
+.fig .dash{stroke:var(--bad);stroke-width:1.5;stroke-dasharray:5 4}
+.fig .dt{fill:var(--ac);stroke:var(--card);stroke-width:2}
+.fig .acl{stroke:var(--ac);stroke-width:2}
+.fig .bad{stroke:var(--bad);stroke-width:3}
+.ct{font-size:18px;margin:4px 2px 0}
+.dots{display:flex;gap:6px;justify-content:center;margin:6px 0}
+.dots i{width:9px;height:9px;border-radius:50%;background:var(--bd)}.dots i.on{background:var(--ac)}
+
+.fig .cvr{fill:none;stroke:var(--bad);stroke-width:3}
+.fig .cvo{fill:none;stroke:#f59e0b;stroke-width:3}
+.fig .cvb{fill:none;stroke:#3b82f6;stroke-width:3}
+.fig .ort{fill:#d97706;font-weight:700}.fig .blt{fill:#3b82f6;font-weight:700}
+.fig .wire{fill:none;stroke:var(--tx);stroke-width:2}
+.fig .wire3{stroke:var(--tx);stroke-width:4}
+.fig .bgr{fill:var(--card);stroke:none}
+.fig .bxk{fill:var(--bd);stroke:var(--tx);stroke-width:2}
+.fig .fa{stroke:var(--ac);stroke-width:4}.fig .fr{stroke:var(--bad);stroke-width:4}
+</style>
+</head>
+<body>
+<a class="back" href="../index.html">← Übersicht</a>
+<h1 id="ttl">L14 · Störterm sin/cos &amp; Koeffizientenvergleich</h1>
+<div class="bar"><i id="bar"></i></div>
+
+<!-- 1) ERKLÄRUNG -->
+<section id="intro">
+  <div class="card">
+<svg viewBox="0 0 340 130" class="fig" xmlns="http://www.w3.org/2000/svg"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ahf"/></marker></defs><rect x="10" y="8" width="320" height="44" rx="10" class="bx"/><text x="170" y="35" text-anchor="middle" class="" style="font-size:16px">s(x) = c·sin(ωx)  oder  c·cos(ωx)</text><line x1="170" y1="56" x2="170" y2="74" class="ar" marker-end="url(#ah)"/><rect x="10" y="78" width="320" height="46" rx="10" class="bxg"/><text x="170" y="106" text-anchor="middle" class="big">y_p = A·sin(ωx) + B·cos(ωx)</text></svg><p class="ct"><b>Immer beide</b>, sin UND cos – auch wenn nur eins in s(x) steht!</p><svg viewBox="0 0 340 220" class="fig" xmlns="http://www.w3.org/2000/svg"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ahf"/></marker></defs><rect x="25" y="6" width="290" height="40" rx="10" class="bx"/><text x="170" y="31" text-anchor="middle" class="" style="font-size:14px">① Ansatz A·sin + B·cos</text><line x1="170" y1="48" x2="170" y2="60" class="ar" marker-end="url(#ah)"/><rect x="25" y="62" width="290" height="40" rx="10" class="bx"/><text x="170" y="87" text-anchor="middle" class="" style="font-size:14px">② ableiten: y_p′ = Aω·cos − Bω·sin</text><line x1="170" y1="104" x2="170" y2="116" class="ar" marker-end="url(#ah)"/><rect x="25" y="118" width="290" height="40" rx="10" class="bx"/><text x="170" y="143" text-anchor="middle" class="" style="font-size:14px">③ einsetzen, nach sin & cos sortieren</text><line x1="170" y1="160" x2="170" y2="172" class="ar" marker-end="url(#ah)"/><rect x="25" y="174" width="290" height="40" rx="10" class="bxg"/><text x="170" y="199" text-anchor="middle" class="" style="font-size:14px">④ Gleichungssystem → A, B</text></svg><p class="ct">Ableitung: sin → cos, cos → −sin, ω kommt vor.</p><svg viewBox="0 0 340 178" class="fig" xmlns="http://www.w3.org/2000/svg"><text x="10" y="28" text-anchor="start" class="big" style="font-size:17px">y′ + 4y = −0,5·sin(2x)</text><text x="334" y="28" text-anchor="end" class="mt" style="font-size:12px">4.51</text><text x="10" y="68" text-anchor="start" class="big" style="font-size:17px"><tspan class="badt">sin:</tspan> −2B + 4A = −0,5</text><text x="10" y="108" text-anchor="start" class="big" style="font-size:17px"><tspan class="bl">cos:</tspan>  2A + 4B = 0</text><text x="10" y="148" text-anchor="start" class="big" style="font-size:17px">A = <tspan class="hlt">−0,1</tspan>, B = <tspan class="hlt">0,05</tspan></text></svg><p class="ct">Rechts steht kein cos → cos-Gleichung = 0.</p>
+  </div>
+  <button class="btn go" id="start">Los geht's →</button>
+</section>
+
+<!-- 2) QUIZ -->
+<section id="quiz" class="hide">
+  <div class="mut" id="cnt"></div>
+  <div class="card"><div id="rep" class="hide"><span class="rep">🔁 Wiederholung</span></div><div id="q"></div></div>
+  <div id="ans"></div>
+  <div id="fb" class="fb hide"></div>
+  <button class="btn go hide" id="next">Weiter →</button>
+</section>
+
+<!-- 3) ERGEBNIS -->
+<section id="end" class="hide">
+  <div class="card">
+    <h2 id="score"></h2>
+    <p id="xpmsg"></p>
+    <p class="mut">Schick mir diesen Code im Chat, dann trage ich es in dein progress.json ein:</p>
+    <div class="res" id="code"></div>
+    <button class="btn go" id="copy">📋 Code kopieren</button>
+  </div>
+  <a class="btn go" href="../index.html" style="text-decoration:none">Zur Übersicht</a>
+</section>
+
+<script>
+var LESSON_ID="14";
+/* Fragetypen:
+   {t:"mc",  q:"Frage", o:["A","B","C"], a:1, e:"Erklärung", topic:"Thema", rep:false}
+   {t:"fill",q:"Der ___ ist …", a:["antwort","alt. schreibweise"], e:"Erklärung", topic:"Thema"}
+   {t:"calc",q:"12·3 = ?", a:36, tol:0, e:"Rechenweg", topic:"Thema"}  */
+var Q=[
+  {t:"mc",q:"y′ + 4y = −0,5·sin(2x). Ansatz?",o:["A·sin(2x)","A·sin(2x) + B·cos(2x)","A·sin(x) + B·cos(x)","A·cos(2x)"],a:1,e:"Immer beide mit gleichem ω = 2. (4.51)",topic:"Ansatz sin/cos"},
+  {t:"mc",q:"Ableitung von A·sin(2x) + B·cos(2x)?",o:["A·cos(2x) − B·sin(2x)","2A·cos(2x) − 2B·sin(2x)","−2A·cos(2x) + 2B·sin(2x)"],a:1,e:"Kettenregel: ω = 2 kommt als Faktor vor. cos → −sin.",topic:"Ableitung sin/cos"},
+  {t:"calc",q:"4.51: 4A − 2B = −0,5 und 2A + 4B = 0. A = ?",a:-0.1,tol:0.001,e:"Aus 2. Gleichung: A = −2B. Einsetzen: −8B − 2B = −0,5 → B = 0,05 → A = −0,1.",topic:"Koeffizientenvergleich"},
+  {t:"calc",q:"Und B = ?",a:0.05,tol:0.001,e:"B = 0,05.",topic:"Koeffizientenvergleich"},
+  {t:"calc",q:"y = C·e^(−4x) − 0,1·sin(2x) + 0,05·cos(2x), y(0) = 0. C = ?",a:-0.05,tol:0.001,e:"0 = C − 0 + 0,05 → C = −0,05. (4.51)",topic:"Konstante aus Anfangsbedingung"},
+  {t:"calc",q:"ẏ + 3y = 2·cos(t). Ansatz A·sin t + B·cos t. A = ?",a:0.2,tol:0.001,e:"y_p′ = A·cos t − B·sin t. sin: −B + 3A = 0; cos: A + 3B = 2. → B = 3A → 10A = 2 → A = 0,2. (4.56a)",topic:"Koeffizientenvergleich"},
+  {t:"calc",q:"Und B = ?",a:0.6,tol:0.001,e:"B = 3A = 0,6.",topic:"Koeffizientenvergleich"},
+  {t:"calc",q:"y′ + 2y = 6. y_p = ?",a:3,tol:0,e:"2A = 6 → A = 3.",topic:"Ansatz Konstante",rep:true}
+];
+
+var i=0,right=0,wrong=[],$=function(id){return document.getElementById(id)};
+function show(id){["intro","quiz","end"].forEach(function(s){$(s).classList.toggle("hide",s!==id)})}
+$("start").onclick=function(){show("quiz");ask()};
+function norm(s){return String(s).trim().toLowerCase().replace(/\s+/g," ")}
+function ask(){
+  var x=Q[i];$("cnt").textContent="Frage "+(i+1)+" von "+Q.length;
+  $("bar").style.width=(i/Q.length*100)+"%";
+  $("rep").classList.toggle("hide",!x.rep);
+  $("q").textContent=x.q;$("fb").className="fb hide";$("next").classList.add("hide");
+  var a=$("ans");a.innerHTML="";
+  if(x.t==="mc"){x.o.forEach(function(o,k){var b=document.createElement("button");b.className="btn";b.textContent=o;b.onclick=function(){done(k===x.a,b)};a.appendChild(b)})}
+  else{
+    var inp=document.createElement("input");inp.className="in";inp.autocomplete="off";inp.autocapitalize="none";
+    if(x.t==="calc")inp.inputMode="decimal";
+    var b=document.createElement("button");b.className="btn go";b.textContent="Prüfen";
+    b.onclick=function(){
+      var v=inp.value;if(!v.trim())return;var ok;
+      if(x.t==="calc"){ok=Math.abs(parseFloat(v.replace(",","."))-x.a)<=(x.tol||0)}
+      else{ok=x.a.some(function(z){return norm(z)===norm(v)})}
+      inp.disabled=true;done(ok,b)};
+    a.appendChild(inp);a.appendChild(b);
+  }
+}
+function done(ok,btn){
+  var x=Q[i];
+  if(x.t==="mc"){var bs=$("ans").children;for(var k=0;k<bs.length;k++){bs[k].disabled=true;if(k===x.a)bs[k].classList.add("ok")}if(!ok)btn.classList.add("no")}
+  else btn.disabled=true;
+  if(ok)right++;else wrong.push(i+1);
+  var sol=x.t==="mc"?x.o[x.a]:(x.t==="calc"?x.a:x.a[0]);
+  var f=$("fb");f.className="fb "+(ok?"ok":"no");
+  f.innerHTML=(ok?"✅ <b>Richtig!</b> ":"❌ <b>Nicht ganz.</b> Richtig: <b>"+sol+"</b>. ")+"<br>"+x.e;
+  var n=$("next");n.classList.remove("hide");n.textContent=i===Q.length-1?"Ergebnis →":"Weiter →";
+  n.scrollIntoView({behavior:"smooth",block:"center"});
+}
+$("next").onclick=function(){i++;if(i<Q.length)ask();else finish()};
+function today(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function finish(){
+  $("bar").style.width="100%";show("end");
+  var xp=right*10+20+(right===Q.length?10:0);
+  var sc=right+"/"+Q.length;
+  $("score").textContent=(right===Q.length?"🎉 ":"👍 ")+sc+" richtig";
+  $("xpmsg").textContent="+"+xp+" XP";
+  var code="L"+LESSON_ID+" "+sc+(wrong.length?" falsch:"+wrong.join(","):"");
+  $("code").textContent=code;
+  $("copy").onclick=function(){
+    if(navigator.clipboard)navigator.clipboard.writeText(code).then(function(){$("copy").textContent="✓ Kopiert"},function(){});
+  };
+  try{
+    var L=JSON.parse(localStorage.getItem("lern")||"{}"),t=today();
+    L.done=L.done||{};
+    if(!L.done[LESSON_ID]){L.xp=(L.xp||0)+xp}
+    L.done[LESSON_ID]={score:sc,date:t};
+    if(L.last!==t){var d=L.last?(new Date(t)-new Date(L.last))/864e5:99;L.streak=d<=1?(L.streak||0)+1:1;L.last=t}
+    localStorage.setItem("lern",JSON.stringify(L));
+  }catch(e){}
+}
+</script>
+</body>
+</html>

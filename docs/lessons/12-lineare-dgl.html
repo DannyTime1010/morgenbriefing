@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>L12 · Lineare DGL: homogen, inhomogen, y = yh + yp</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--tx:#1f2430;--mut:#6b7280;--ac:#58cc02;--acd:#46a302;--bad:#ea2b2b;--bd:#e5e7eb;--okbg:#e7f9d4;--badbg:#ffe1e1}
+@media(prefers-color-scheme:dark){:root{--bg:#131820;--card:#1d242f;--tx:#eef1f6;--mut:#9aa4b2;--bd:#2c3542;--okbg:#1f3a14;--badbg:#3f1b1b}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:18px/1.55 system-ui,-apple-system,sans-serif;padding:16px;max-width:640px;margin-inline:auto;padding-bottom:120px}
+a.back{display:inline-block;padding:10px 0;color:var(--ac);text-decoration:none;font-weight:600}
+h1{font-size:24px;margin:4px 0 12px}
+.bar{height:10px;background:var(--bd);border-radius:5px;overflow:hidden;margin:8px 0 16px}
+.bar i{display:block;height:100%;width:0;background:var(--ac);transition:width .3s}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:16px;margin-bottom:14px}
+.ex{background:var(--okbg);border-radius:12px;padding:12px;margin-top:10px}
+code{background:var(--bd);padding:1px 6px;border-radius:6px}
+.btn{display:block;width:100%;min-height:54px;padding:14px;font-size:18px;font-weight:700;border-radius:14px;border:2px solid var(--bd);border-bottom-width:4px;background:var(--card);color:var(--tx);margin:10px 0;text-align:left;cursor:pointer}
+.btn.go{background:var(--ac);border-color:var(--acd);color:#fff;text-align:center}
+.btn.ok{background:var(--okbg);border-color:var(--ac)}
+.btn.no{background:var(--badbg);border-color:var(--bad)}
+.btn:disabled{opacity:1;cursor:default}
+input.in{width:100%;min-height:54px;padding:12px;font-size:20px;border-radius:14px;border:2px solid var(--bd);background:var(--card);color:var(--tx)}
+.fb{border-radius:14px;padding:14px;margin-top:12px}
+.fb.ok{background:var(--okbg)}.fb.no{background:var(--badbg)}
+.hide{display:none}
+.mut{color:var(--mut);font-size:15px}
+.res{font-family:ui-monospace,monospace;background:var(--bd);padding:12px;border-radius:12px;word-break:break-all}
+.rep{display:inline-block;font-size:13px;background:#ffb02e;color:#222;border-radius:8px;padding:2px 8px;margin-bottom:6px}
+
+.fig{width:100%;height:auto;display:block;margin:4px 0 10px}
+.fig text{paint-order:stroke;stroke:var(--card);stroke-width:4px;stroke-linejoin:round;fill:var(--tx);font-family:system-ui,-apple-system,sans-serif;font-size:15px}
+.fig .big{font-size:19px;font-weight:700}
+.fig .mt{fill:var(--mut)}
+.fig .hlt,.fig tspan.hlt{fill:var(--acd);font-weight:700}
+.fig .badt{fill:var(--bad);font-weight:700}
+.fig tspan.bl{fill:#3b82f6;font-weight:700}.fig tspan.or{fill:#f59e0b;font-weight:700}
+.fig .bx{fill:var(--card);stroke:var(--bd);stroke-width:2}
+.fig .bxg{fill:var(--okbg);stroke:var(--ac);stroke-width:2}
+.fig .bxr{fill:var(--badbg);stroke:var(--bad);stroke-width:2}
+.fig .ar{stroke:var(--mut);stroke-width:2}.fig .ahf{fill:var(--mut)}
+.fig .ax{stroke:var(--mut);stroke-width:1.2}
+.fig .cv{fill:none;stroke:var(--mut);stroke-width:2;opacity:.55}
+.fig .cvh{fill:none;stroke:var(--ac);stroke-width:3.5}
+.fig .fl{stroke:#3b82f6;stroke-width:1.8;stroke-linecap:round}
+.fig .dash{stroke:var(--bad);stroke-width:1.5;stroke-dasharray:5 4}
+.fig .dt{fill:var(--ac);stroke:var(--card);stroke-width:2}
+.fig .acl{stroke:var(--ac);stroke-width:2}
+.fig .bad{stroke:var(--bad);stroke-width:3}
+.ct{font-size:18px;margin:4px 2px 0}
+.dots{display:flex;gap:6px;justify-content:center;margin:6px 0}
+.dots i{width:9px;height:9px;border-radius:50%;background:var(--bd)}.dots i.on{background:var(--ac)}
+
+.fig .cvr{fill:none;stroke:var(--bad);stroke-width:3}
+.fig .cvo{fill:none;stroke:#f59e0b;stroke-width:3}
+.fig .cvb{fill:none;stroke:#3b82f6;stroke-width:3}
+.fig .ort{fill:#d97706;font-weight:700}.fig .blt{fill:#3b82f6;font-weight:700}
+.fig .wire{fill:none;stroke:var(--tx);stroke-width:2}
+.fig .wire3{stroke:var(--tx);stroke-width:4}
+.fig .bgr{fill:var(--card);stroke:none}
+.fig .bxk{fill:var(--bd);stroke:var(--tx);stroke-width:2}
+.fig .fa{stroke:var(--ac);stroke-width:4}.fig .fr{stroke:var(--bad);stroke-width:4}
+</style>
+</head>
+<body>
+<a class="back" href="../index.html">← Übersicht</a>
+<h1 id="ttl">L12 · Lineare DGL: homogen, inhomogen, y = yh + yp</h1>
+<div class="bar"><i id="bar"></i></div>
+
+<!-- 1) ERKLÄRUNG -->
+<section id="intro">
+  <div class="card">
+<svg viewBox="0 0 340 170" class="fig" xmlns="http://www.w3.org/2000/svg"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ahf"/></marker></defs><text x="170" y="52" text-anchor="middle" class="big" style="font-size:24px">y′ + <tspan class="bl">3</tspan>·y = <tspan class="or">eˣ</tspan></text><text x="118" y="92" text-anchor="middle" class="" style="font-size:14px">f(x) = 3</text><text x="232" y="92" text-anchor="middle" class="" style="font-size:14px">Störfunktion s(x)</text><rect x="10" y="112" width="155" height="48" rx="10" class="bx"/><text x="87.5" y="141" text-anchor="middle" class="" style="font-size:14px">s(x) = 0 → homogen</text><rect x="175" y="112" width="155" height="48" rx="10" class="bxg"/><text x="252.5" y="141" text-anchor="middle" class="" style="font-size:14px">s(x) ≠ 0 → inhomogen</text></svg><p class="ct">Form: <b>y′ + f(x)·y = s(x)</b></p><svg viewBox="0 0 340 220" class="fig" xmlns="http://www.w3.org/2000/svg"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ahf"/></marker></defs><rect x="25" y="6" width="290" height="40" rx="10" class="bx"/><text x="170" y="31" text-anchor="middle" class="" style="font-size:15px">① y_h: s(x) = 0 setzen → Trennen</text><line x1="170" y1="48" x2="170" y2="60" class="ar" marker-end="url(#ah)"/><rect x="25" y="62" width="290" height="40" rx="10" class="bx"/><text x="170" y="87" text-anchor="middle" class="" style="font-size:15px">② y_p: Ansatz aus der Tabelle</text><line x1="170" y1="104" x2="170" y2="116" class="ar" marker-end="url(#ah)"/><rect x="25" y="118" width="290" height="40" rx="10" class="bxg"/><text x="170" y="143" text-anchor="middle" class="" style="font-size:15px">③ y = y_h + y_p</text><line x1="170" y1="160" x2="170" y2="172" class="ar" marker-end="url(#ah)"/><rect x="25" y="174" width="290" height="40" rx="10" class="bxr"/><text x="170" y="199" text-anchor="middle" class="" style="font-size:15px">④ erst JETZT C aus Anfangsbedingung</text></svg><p class="ct">Die Anfangsbedingung kommt immer ganz am Schluss!</p><svg viewBox="0 0 340 70" class="fig" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="10" width="320" height="50" rx="10" class="bxg"/><text x="170" y="40" text-anchor="middle" class="big">y′ + a·y = 0  →  y_h = C·e^(−a·x)</text></svg><p class="ct">Abkürzung für konstantes a – musst du nicht jedes Mal trennen.</p>
+  </div>
+  <button class="btn go" id="start">Los geht's →</button>
+</section>
+
+<!-- 2) QUIZ -->
+<section id="quiz" class="hide">
+  <div class="mut" id="cnt"></div>
+  <div class="card"><div id="rep" class="hide"><span class="rep">🔁 Wiederholung</span></div><div id="q"></div></div>
+  <div id="ans"></div>
+  <div id="fb" class="fb hide"></div>
+  <button class="btn go hide" id="next">Weiter →</button>
+</section>
+
+<!-- 3) ERGEBNIS -->
+<section id="end" class="hide">
+  <div class="card">
+    <h2 id="score"></h2>
+    <p id="xpmsg"></p>
+    <p class="mut">Schick mir diesen Code im Chat, dann trage ich es in dein progress.json ein:</p>
+    <div class="res" id="code"></div>
+    <button class="btn go" id="copy">📋 Code kopieren</button>
+  </div>
+  <a class="btn go" href="../index.html" style="text-decoration:none">Zur Übersicht</a>
+</section>
+
+<script>
+var LESSON_ID="12";
+/* Fragetypen:
+   {t:"mc",  q:"Frage", o:["A","B","C"], a:1, e:"Erklärung", topic:"Thema", rep:false}
+   {t:"fill",q:"Der ___ ist …", a:["antwort","alt. schreibweise"], e:"Erklärung", topic:"Thema"}
+   {t:"calc",q:"12·3 = ?", a:36, tol:0, e:"Rechenweg", topic:"Thema"}  */
+var Q=[
+  {t:"mc",q:"Welche DGL ist inhomogen?",o:["y′ − 8y = 0","5y′ = 2y","y′ + 2y = eˣ"],a:2,e:"Nur dort steht eine Störfunktion s(x) = eˣ ≠ 0. (4.52)",topic:"homogen/inhomogen"},
+  {t:"mc",q:"y′ + y − sin(x) = 0 ist …",o:["homogen","inhomogen"],a:1,e:"Umformen: y′ + y = sin(x) → s(x) = sin(x) ≠ 0 → inhomogen. (4.52D)",topic:"homogen/inhomogen"},
+  {t:"mc",q:"Löse y′ + 6y = 0.",o:["y = C·e^(6x)","y = C·e^(−6x)","y = −6x + C"],a:1,e:"y′ + a·y = 0 → y = C·e^(−ax), a = 6. (4.53a)",topic:"homogene Lösung"},
+  {t:"calc",q:"3y′ + 9y = 0 → y = C·e^(k·x). k = ?",a:-3,tol:0,e:"Durch 3: y′ + 3y = 0 → k = −3. (4.53b)",topic:"homogene Lösung"},
+  {t:"calc",q:"−5y′ + 12y = 0 → y = C·e^(k·x). k = ?",a:2.4,tol:0.001,e:"y′ = 12/5·y = 2,4y → k = 2,4. (4.53d)",topic:"homogene Lösung"},
+  {t:"mc",q:"Wann setzt du die Anfangsbedingung ein?",o:["Gleich in y_h","In y_p","Erst in y = y_h + y_p"],a:2,e:"Typischer Fehler: C schon in y_h bestimmen. Richtig: erst in der Gesamtlösung!",topic:"Reihenfolge bei linearer DGL"},
+  {t:"mc",q:"Allgemeine Lösung: y = C·e^(x/5) + 3x². Wie lautet die homogene DGL?",o:["y′ − 0,2y = 0","y′ + 5y = 0","y′ − 5y = 0","y′ = 3x²"],a:0,e:"y_h = C·e^(0,2x) → y′ = 0,2y → y′ − 0,2y = 0. (4.62)",topic:"homogene Lösung"},
+  {t:"mc",q:"Was ist ∫ (1/y) dy?",o:["ln|y| + C","1/y² + C","y + C"],a:0,e:"Standardintegral.",topic:"Integral 1/y",rep:true}
+];
+
+var i=0,right=0,wrong=[],$=function(id){return document.getElementById(id)};
+function show(id){["intro","quiz","end"].forEach(function(s){$(s).classList.toggle("hide",s!==id)})}
+$("start").onclick=function(){show("quiz");ask()};
+function norm(s){return String(s).trim().toLowerCase().replace(/\s+/g," ")}
+function ask(){
+  var x=Q[i];$("cnt").textContent="Frage "+(i+1)+" von "+Q.length;
+  $("bar").style.width=(i/Q.length*100)+"%";
+  $("rep").classList.toggle("hide",!x.rep);
+  $("q").textContent=x.q;$("fb").className="fb hide";$("next").classList.add("hide");
+  var a=$("ans");a.innerHTML="";
+  if(x.t==="mc"){x.o.forEach(function(o,k){var b=document.createElement("button");b.className="btn";b.textContent=o;b.onclick=function(){done(k===x.a,b)};a.appendChild(b)})}
+  else{
+    var inp=document.createElement("input");inp.className="in";inp.autocomplete="off";inp.autocapitalize="none";
+    if(x.t==="calc")inp.inputMode="decimal";
+    var b=document.createElement("button");b.className="btn go";b.textContent="Prüfen";
+    b.onclick=function(){
+      var v=inp.value;if(!v.trim())return;var ok;
+      if(x.t==="calc"){ok=Math.abs(parseFloat(v.replace(",","."))-x.a)<=(x.tol||0)}
+      else{ok=x.a.some(function(z){return norm(z)===norm(v)})}
+      inp.disabled=true;done(ok,b)};
+    a.appendChild(inp);a.appendChild(b);
+  }
+}
+function done(ok,btn){
+  var x=Q[i];
+  if(x.t==="mc"){var bs=$("ans").children;for(var k=0;k<bs.length;k++){bs[k].disabled=true;if(k===x.a)bs[k].classList.add("ok")}if(!ok)btn.classList.add("no")}
+  else btn.disabled=true;
+  if(ok)right++;else wrong.push(i+1);
+  var sol=x.t==="mc"?x.o[x.a]:(x.t==="calc"?x.a:x.a[0]);
+  var f=$("fb");f.className="fb "+(ok?"ok":"no");
+  f.innerHTML=(ok?"✅ <b>Richtig!</b> ":"❌ <b>Nicht ganz.</b> Richtig: <b>"+sol+"</b>. ")+"<br>"+x.e;
+  var n=$("next");n.classList.remove("hide");n.textContent=i===Q.length-1?"Ergebnis →":"Weiter →";
+  n.scrollIntoView({behavior:"smooth",block:"center"});
+}
+$("next").onclick=function(){i++;if(i<Q.length)ask();else finish()};
+function today(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function finish(){
+  $("bar").style.width="100%";show("end");
+  var xp=right*10+20+(right===Q.length?10:0);
+  var sc=right+"/"+Q.length;
+  $("score").textContent=(right===Q.length?"🎉 ":"👍 ")+sc+" richtig";
+  $("xpmsg").textContent="+"+xp+" XP";
+  var code="L"+LESSON_ID+" "+sc+(wrong.length?" falsch:"+wrong.join(","):"");
+  $("code").textContent=code;
+  $("copy").onclick=function(){
+    if(navigator.clipboard)navigator.clipboard.writeText(code).then(function(){$("copy").textContent="✓ Kopiert"},function(){});
+  };
+  try{
+    var L=JSON.parse(localStorage.getItem("lern")||"{}"),t=today();
+    L.done=L.done||{};
+    if(!L.done[LESSON_ID]){L.xp=(L.xp||0)+xp}
+    L.done[LESSON_ID]={score:sc,date:t};
+    if(L.last!==t){var d=L.last?(new Date(t)-new Date(L.last))/864e5:99;L.streak=d<=1?(L.streak||0)+1:1;L.last=t}
+    localStorage.setItem("lern",JSON.stringify(L));
+  }catch(e){}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>L09 · Newton'sches Abkühlungsgesetz</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--tx:#1f2430;--mut:#6b7280;--ac:#58cc02;--acd:#46a302;--bad:#ea2b2b;--bd:#e5e7eb;--okbg:#e7f9d4;--badbg:#ffe1e1}
+@media(prefers-color-scheme:dark){:root{--bg:#131820;--card:#1d242f;--tx:#eef1f6;--mut:#9aa4b2;--bd:#2c3542;--okbg:#1f3a14;--badbg:#3f1b1b}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:18px/1.55 system-ui,-apple-system,sans-serif;padding:16px;max-width:640px;margin-inline:auto;padding-bottom:120px}
+a.back{display:inline-block;padding:10px 0;color:var(--ac);text-decoration:none;font-weight:600}
+h1{font-size:24px;margin:4px 0 12px}
+.bar{height:10px;background:var(--bd);border-radius:5px;overflow:hidden;margin:8px 0 16px}
+.bar i{display:block;height:100%;width:0;background:var(--ac);transition:width .3s}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:16px;margin-bottom:14px}
+.ex{background:var(--okbg);border-radius:12px;padding:12px;margin-top:10px}
+code{background:var(--bd);padding:1px 6px;border-radius:6px}
+.btn{display:block;width:100%;min-height:54px;padding:14px;font-size:18px;font-weight:700;border-radius:14px;border:2px solid var(--bd);border-bottom-width:4px;background:var(--card);color:var(--tx);margin:10px 0;text-align:left;cursor:pointer}
+.btn.go{background:var(--ac);border-color:var(--acd);color:#fff;text-align:center}
+.btn.ok{background:var(--okbg);border-color:var(--ac)}
+.btn.no{background:var(--badbg);border-color:var(--bad)}
+.btn:disabled{opacity:1;cursor:default}
+input.in{width:100%;min-height:54px;padding:12px;font-size:20px;border-radius:14px;border:2px solid var(--bd);background:var(--card);color:var(--tx)}
+.fb{border-radius:14px;padding:14px;margin-top:12px}
+.fb.ok{background:var(--okbg)}.fb.no{background:var(--badbg)}
+.hide{display:none}
+.mut{color:var(--mut);font-size:15px}
+.res{font-family:ui-monospace,monospace;background:var(--bd);padding:12px;border-radius:12px;word-break:break-all}
+.rep{display:inline-block;font-size:13px;background:#ffb02e;color:#222;border-radius:8px;padding:2px 8px;margin-bottom:6px}
+
+.fig{width:100%;height:auto;display:block;margin:4px 0 10px}
+.fig text{paint-order:stroke;stroke:var(--card);stroke-width:4px;stroke-linejoin:round;fill:var(--tx);font-family:system-ui,-apple-system,sans-serif;font-size:15px}
+.fig .big{font-size:19px;font-weight:700}
+.fig .mt{fill:var(--mut)}
+.fig .hlt,.fig tspan.hlt{fill:var(--acd);font-weight:700}
+.fig .badt{fill:var(--bad);font-weight:700}
+.fig tspan.bl{fill:#3b82f6;font-weight:700}.fig tspan.or{fill:#f59e0b;font-weight:700}
+.fig .bx{fill:var(--card);stroke:var(--bd);stroke-width:2}
+.fig .bxg{fill:var(--okbg);stroke:var(--ac);stroke-width:2}
+.fig .bxr{fill:var(--badbg);stroke:var(--bad);stroke-width:2}
+.fig .ar{stroke:var(--mut);stroke-width:2}.fig .ahf{fill:var(--mut)}
+.fig .ax{stroke:var(--mut);stroke-width:1.2}
+.fig .cv{fill:none;stroke:var(--mut);stroke-width:2;opacity:.55}
+.fig .cvh{fill:none;stroke:var(--ac);stroke-width:3.5}
+.fig .fl{stroke:#3b82f6;stroke-width:1.8;stroke-linecap:round}
+.fig .dash{stroke:var(--bad);stroke-width:1.5;stroke-dasharray:5 4}
+.fig .dt{fill:var(--ac);stroke:var(--card);stroke-width:2}
+.fig .acl{stroke:var(--ac);stroke-width:2}
+.fig .bad{stroke:var(--bad);stroke-width:3}
+.ct{font-size:18px;margin:4px 2px 0}
+.dots{display:flex;gap:6px;justify-content:center;margin:6px 0}
+.dots i{width:9px;height:9px;border-radius:50%;background:var(--bd)}.dots i.on{background:var(--ac)}
+
+.fig .cvr{fill:none;stroke:var(--bad);stroke-width:3}
+.fig .cvo{fill:none;stroke:#f59e0b;stroke-width:3}
+.fig .cvb{fill:none;stroke:#3b82f6;stroke-width:3}
+.fig .ort{fill:#d97706;font-weight:700}.fig .blt{fill:#3b82f6;font-weight:700}
+.fig .wire{fill:none;stroke:var(--tx);stroke-width:2}
+.fig .wire3{stroke:var(--tx);stroke-width:4}
+.fig .bgr{fill:var(--card);stroke:none}
+.fig .bxk{fill:var(--bd);stroke:var(--tx);stroke-width:2}
+.fig .fa{stroke:var(--ac);stroke-width:4}.fig .fr{stroke:var(--bad);stroke-width:4}
+</style>
+</head>
+<body>
+<a class="back" href="../index.html">← Übersicht</a>
+<h1 id="ttl">L09 · Newton'sches Abkühlungsgesetz</h1>
+<div class="bar"><i id="bar"></i></div>
+
+<!-- 1) ERKLÄRUNG -->
+<section id="intro">
+  <div class="card">
+<svg viewBox="0 0 340 230" class="fig" xmlns="http://www.w3.org/2000/svg"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ahf"/></marker></defs><line x1="24" y1="206" x2="316" y2="206" class="ax"/><line x1="24" y1="206" x2="24" y2="24" class="ax"/><text x="312" y="200" text-anchor="end" class="mt" style="font-size:13px">t</text><text x="30" y="36" text-anchor="start" class="mt" style="font-size:13px">T</text><line x1="24" y1="172.909" x2="316" y2="172.909" class="dash"/><rect x="196" y="146.909" width="118" height="22" rx="6" class="bx"/><text x="255" y="162.909" text-anchor="middle" class="badt" style="font-size:14px">T_U = 20 °C</text><polyline points="24.0,40.5 25.8,43.5 27.6,46.4 29.5,49.2 31.3,51.9 33.1,54.6 35.0,57.3 36.8,59.8 38.6,62.3 40.4,64.8 42.2,67.2 44.1,69.6 45.9,71.9 47.7,74.1 49.5,76.3 51.4,78.5 53.2,80.6 55.0,82.6 56.9,84.6 58.7,86.6 60.5,88.5 62.3,90.4 64.2,92.2 66.0,94.0 67.8,95.8 69.6,97.5 71.5,99.2 73.3,100.8 75.1,102.4 76.9,104.0 78.8,105.5 80.6,107.0 82.4,108.5 84.2,109.9 86.0,111.3 87.9,112.7 89.7,114.0 91.5,115.3 93.3,116.6 95.2,117.9 97.0,119.1 98.8,120.3 100.7,121.5 102.5,122.6 104.3,123.7 106.1,124.8 107.9,125.9 109.8,126.9 111.6,128.0 113.4,129.0 115.2,129.9 117.1,130.9 118.9,131.8 120.7,132.7 122.6,133.6 124.4,134.5 126.2,135.4 128.0,136.2 129.8,137.0 131.7,137.8 133.5,138.6 135.3,139.4 137.2,140.1 139.0,140.8 140.8,141.5 142.6,142.2 144.4,142.9 146.3,143.6 148.1,144.2 149.9,144.9 151.8,145.5 153.6,146.1 155.4,146.7 157.2,147.3 159.1,147.9 160.9,148.4 162.7,149.0 164.5,149.5 166.3,150.0 168.2,150.5 170.0,151.0 171.8,151.5 173.6,152.0 175.5,152.5 177.3,152.9 179.1,153.4 180.9,153.8 182.8,154.2 184.6,154.6 186.4,155.0 188.2,155.4 190.1,155.8 191.9,156.2 193.7,156.6 195.6,156.9 197.4,157.3 199.2,157.6 201.0,158.0 202.9,158.3 204.7,158.6 206.5,159.0 208.3,159.3 210.1,159.6 212.0,159.9 213.8,160.2 215.6,160.4 217.4,160.7 219.3,161.0 221.1,161.3 222.9,161.5 224.8,161.8 226.6,162.0 228.4,162.3 230.2,162.5 232.1,162.7 233.9,163.0 235.7,163.2 237.5,163.4 239.4,163.6 241.2,163.8 243.0,164.0 244.8,164.2 246.6,164.4 248.5,164.6 250.3,164.8 252.1,165.0 253.9,165.1 255.8,165.3 257.6,165.5 259.4,165.6 261.2,165.8 263.1,166.0 264.9,166.1 266.7,166.3 268.6,166.4 270.4,166.6 272.2,166.7 274.0,166.8 275.9,167.0 277.7,167.1 279.5,167.2 281.3,167.4 283.1,167.5 285.0,167.6 286.8,167.7 288.6,167.8 290.4,168.0 292.3,168.1 294.1,168.2 295.9,168.3 297.8,168.4 299.6,168.5 301.4,168.6 303.2,168.7 305.1,168.8 306.9,168.9 308.7,169.0 310.5,169.0 312.4,169.1 314.2,169.2 316.0,169.3" class="cvr"/><polyline points="24.0,196.1 25.8,195.6 27.6,195.1 29.5,194.6 31.3,194.1 33.1,193.6 35.0,193.1 36.8,192.7 38.6,192.3 40.4,191.8 42.2,191.4 44.1,191.0 45.9,190.6 47.7,190.2 49.5,189.8 51.4,189.4 53.2,189.1 55.0,188.7 56.9,188.4 58.7,188.0 60.5,187.7 62.3,187.4 64.2,187.0 66.0,186.7 67.8,186.4 69.6,186.1 71.5,185.8 73.3,185.5 75.1,185.2 76.9,185.0 78.8,184.7 80.6,184.4 82.4,184.2 84.2,183.9 86.0,183.7 87.9,183.4 89.7,183.2 91.5,183.0 93.3,182.8 95.2,182.5 97.0,182.3 98.8,182.1 100.7,181.9 102.5,181.7 104.3,181.5 106.1,181.3 107.9,181.1 109.8,181.0 111.6,180.8 113.4,180.6 115.2,180.4 117.1,180.3 118.9,180.1 120.7,179.9 122.6,179.8 124.4,179.6 126.2,179.5 128.0,179.3 129.8,179.2 131.7,179.1 133.5,178.9 135.3,178.8 137.2,178.6 139.0,178.5 140.8,178.4 142.6,178.3 144.4,178.2 146.3,178.0 148.1,177.9 149.9,177.8 151.8,177.7 153.6,177.6 155.4,177.5 157.2,177.4 159.1,177.3 160.9,177.2 162.7,177.1 164.5,177.0 166.3,176.9 168.2,176.8 170.0,176.7 171.8,176.7 173.6,176.6 175.5,176.5 177.3,176.4 179.1,176.3 180.9,176.3 182.8,176.2 184.6,176.1 186.4,176.0 188.2,176.0 190.1,175.9 191.9,175.8 193.7,175.8 195.6,175.7 197.4,175.6 199.2,175.6 201.0,175.5 202.9,175.5 204.7,175.4 206.5,175.4 208.3,175.3 210.1,175.2 212.0,175.2 213.8,175.1 215.6,175.1 217.4,175.0 219.3,175.0 221.1,174.9 222.9,174.9 224.8,174.9 226.6,174.8 228.4,174.8 230.2,174.7 232.1,174.7 233.9,174.7 235.7,174.6 237.5,174.6 239.4,174.5 241.2,174.5 243.0,174.5 244.8,174.4 246.6,174.4 248.5,174.4 250.3,174.3 252.1,174.3 253.9,174.3 255.8,174.2 257.6,174.2 259.4,174.2 261.2,174.2 263.1,174.1 264.9,174.1 266.7,174.1 268.6,174.0 270.4,174.0 272.2,174.0 274.0,174.0 275.9,173.9 277.7,173.9 279.5,173.9 281.3,173.9 283.1,173.9 285.0,173.8 286.8,173.8 288.6,173.8 290.4,173.8 292.3,173.8 294.1,173.7 295.9,173.7 297.8,173.7 299.6,173.7 301.4,173.7 303.2,173.6 305.1,173.6 306.9,173.6 308.7,173.6 310.5,173.6 312.4,173.6 314.2,173.6 316.0,173.5" class="cvh"/><text x="38.6" y="47.1636" text-anchor="start" class="badt" style="font-size:13px">Abkühlung</text><text x="104.3" y="196.073" text-anchor="start" class="hlt" style="font-size:13px">Erwärmung</text></svg><p class="ct">Temperatur nähert sich der Umgebung T_U – das ist beschränktes Wachstum bzw. Abnahme.</p><svg viewBox="0 0 340 135" class="fig" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="8" width="320" height="46" rx="10" class="bx"/><text x="170" y="36" text-anchor="middle" class="big">dT/dt = −k·(T − T_U)</text><line x1="170" y1="58" x2="170" y2="76" class="ar" marker-end="url(#ah)"/><rect x="10" y="80" width="320" height="46" rx="10" class="bxg"/><text x="170" y="108" text-anchor="middle" class="big">T(t) = T_U + (T₀ − T_U)·e^(−k·t)</text></svg><p class="ct">k > 0. Im Buch steht oft dT/dt = k·(T − T_U) – dann ist k beim Abkühlen negativ.</p><svg viewBox="0 0 340 164" class="fig" xmlns="http://www.w3.org/2000/svg"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ahf"/></marker></defs><rect x="25" y="6" width="290" height="40" rx="10" class="bx"/><text x="170" y="31" text-anchor="middle" class="" style="font-size:15px">① T₀ und T_U einsetzen</text><line x1="170" y1="48" x2="170" y2="60" class="ar" marker-end="url(#ah)"/><rect x="25" y="62" width="290" height="40" rx="10" class="bx"/><text x="170" y="87" text-anchor="middle" class="" style="font-size:15px">② Messwert → k</text><line x1="170" y1="104" x2="170" y2="116" class="ar" marker-end="url(#ah)"/><rect x="25" y="118" width="290" height="40" rx="10" class="bxg"/><text x="170" y="143" text-anchor="middle" class="" style="font-size:15px">③ Zielwert → t = −ln(…)/k</text></svg><p class="ct">Immer gleiches Schema (4.44, 4.134).</p>
+  </div>
+  <button class="btn go" id="start">Los geht's →</button>
+</section>
+
+<!-- 2) QUIZ -->
+<section id="quiz" class="hide">
+  <div class="mut" id="cnt"></div>
+  <div class="card"><div id="rep" class="hide"><span class="rep">🔁 Wiederholung</span></div><div id="q"></div></div>
+  <div id="ans"></div>
+  <div id="fb" class="fb hide"></div>
+  <button class="btn go hide" id="next">Weiter →</button>
+</section>
+
+<!-- 3) ERGEBNIS -->
+<section id="end" class="hide">
+  <div class="card">
+    <h2 id="score"></h2>
+    <p id="xpmsg"></p>
+    <p class="mut">Schick mir diesen Code im Chat, dann trage ich es in dein progress.json ein:</p>
+    <div class="res" id="code"></div>
+    <button class="btn go" id="copy">📋 Code kopieren</button>
+  </div>
+  <a class="btn go" href="../index.html" style="text-decoration:none">Zur Übersicht</a>
+</section>
+
+<script>
+var LESSON_ID="09";
+/* Fragetypen:
+   {t:"mc",  q:"Frage", o:["A","B","C"], a:1, e:"Erklärung", topic:"Thema", rep:false}
+   {t:"fill",q:"Der ___ ist …", a:["antwort","alt. schreibweise"], e:"Erklärung", topic:"Thema"}
+   {t:"calc",q:"12·3 = ?", a:36, tol:0, e:"Rechenweg", topic:"Thema"}  */
+var Q=[
+  {t:"mc",q:"dT/dt = −k·(T − 24), k > 0, T(0) = 40 °C. Abkühlung oder Erwärmung?",o:["Abkühlung","Erwärmung"],a:0,e:"T − 24 = 16 > 0 → dT/dt = −16k < 0 → Temperatur sinkt. (4.43)",topic:"Vorzeichen Abkühlung/Erwärmung"},
+  {t:"mc",q:"dT/dt = k·(24 − T), k > 0, T(0) = 6 °C. Abkühlung oder Erwärmung?",o:["Abkühlung","Erwärmung"],a:1,e:"24 − 6 = 18 > 0 → dT/dt > 0 → Erwärmung. (4.43)",topic:"Vorzeichen Abkühlung/Erwärmung"},
+  {t:"calc",q:"Probe: 160 °C, Wasser 20 °C, nach 5 min 100 °C. Bestimme k (4 Dezimalen).",a:0.1119,tol:0.0005,e:"100 = 20 + 140·e^(−5k) → e^(−5k) = 80/140 → k = −ln(0,5714)/5 ≈ 0,1119 (4.44)",topic:"k aus Messwert"},
+  {t:"calc",q:"Wann hat die Probe 30 °C? (k = 0,1119, Minuten)",a:23.58,tol:0.15,e:"30 = 20 + 140·e^(−kt) → e^(−kt) = 1/14 → t = ln 14 / 0,1119 ≈ 23,6 min (4.44)",topic:"Zeit berechnen"},
+  {t:"calc",q:"Grillgitter 150 °C, außen 25 °C, nach 18 min 90 °C. Wann hat es 30 °C? (min)",a:88.6,tol:0.4,e:"e^(−18k) = 65/125 → k ≈ 0,03633. 30 = 25 + 125·e^(−kt) → t = ln 25 / k ≈ 88,6 min (4.134)",topic:"Zeit berechnen"},
+  {t:"mc",q:"Welche Temperatur hat der Körper nach sehr langer Zeit?",o:["0 °C","T₀","T_U (Umgebung)","T₀ − T_U"],a:2,e:"e^(−kt) → 0, also T → T_U. Das ist der stationäre Teil. (4.61)",topic:"Sättigungswert"},
+  {t:"mc",q:"Badewanne: dT/dt = k·(T − 25), Wasser 43 °C kühlt ab. Ist k positiv oder negativ?",o:["positiv","negativ"],a:1,e:"T − 25 > 0 und dT/dt < 0 (Abkühlung) → k muss negativ sein. (4.46)",topic:"Vorzeichen Abkühlung/Erwärmung"},
+  {t:"calc",q:"y′ = 0,3·(50 − y), y(0) = 10. Langfristiger Wert?",a:50,tol:0,e:"Sättigungswert K = 50.",topic:"Sättigungswert",rep:true}
+];
+
+var i=0,right=0,wrong=[],$=function(id){return document.getElementById(id)};
+function show(id){["intro","quiz","end"].forEach(function(s){$(s).classList.toggle("hide",s!==id)})}
+$("start").onclick=function(){show("quiz");ask()};
+function norm(s){return String(s).trim().toLowerCase().replace(/\s+/g," ")}
+function ask(){
+  var x=Q[i];$("cnt").textContent="Frage "+(i+1)+" von "+Q.length;
+  $("bar").style.width=(i/Q.length*100)+"%";
+  $("rep").classList.toggle("hide",!x.rep);
+  $("q").textContent=x.q;$("fb").className="fb hide";$("next").classList.add("hide");
+  var a=$("ans");a.innerHTML="";
+  if(x.t==="mc"){x.o.forEach(function(o,k){var b=document.createElement("button");b.className="btn";b.textContent=o;b.onclick=function(){done(k===x.a,b)};a.appendChild(b)})}
+  else{
+    var inp=document.createElement("input");inp.className="in";inp.autocomplete="off";inp.autocapitalize="none";
+    if(x.t==="calc")inp.inputMode="decimal";
+    var b=document.createElement("button");b.className="btn go";b.textContent="Prüfen";
+    b.onclick=function(){
+      var v=inp.value;if(!v.trim())return;var ok;
+      if(x.t==="calc"){ok=Math.abs(parseFloat(v.replace(",","."))-x.a)<=(x.tol||0)}
+      else{ok=x.a.some(function(z){return norm(z)===norm(v)})}
+      inp.disabled=true;done(ok,b)};
+    a.appendChild(inp);a.appendChild(b);
+  }
+}
+function done(ok,btn){
+  var x=Q[i];
+  if(x.t==="mc"){var bs=$("ans").children;for(var k=0;k<bs.length;k++){bs[k].disabled=true;if(k===x.a)bs[k].classList.add("ok")}if(!ok)btn.classList.add("no")}
+  else btn.disabled=true;
+  if(ok)right++;else wrong.push(i+1);
+  var sol=x.t==="mc"?x.o[x.a]:(x.t==="calc"?x.a:x.a[0]);
+  var f=$("fb");f.className="fb "+(ok?"ok":"no");
+  f.innerHTML=(ok?"✅ <b>Richtig!</b> ":"❌ <b>Nicht ganz.</b> Richtig: <b>"+sol+"</b>. ")+"<br>"+x.e;
+  var n=$("next");n.classList.remove("hide");n.textContent=i===Q.length-1?"Ergebnis →":"Weiter →";
+  n.scrollIntoView({behavior:"smooth",block:"center"});
+}
+$("next").onclick=function(){i++;if(i<Q.length)ask();else finish()};
+function today(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function finish(){
+  $("bar").style.width="100%";show("end");
+  var xp=right*10+20+(right===Q.length?10:0);
+  var sc=right+"/"+Q.length;
+  $("score").textContent=(right===Q.length?"🎉 ":"👍 ")+sc+" richtig";
+  $("xpmsg").textContent="+"+xp+" XP";
+  var code="L"+LESSON_ID+" "+sc+(wrong.length?" falsch:"+wrong.join(","):"");
+  $("code").textContent=code;
+  $("copy").onclick=function(){
+    if(navigator.clipboard)navigator.clipboard.writeText(code).then(function(){$("copy").textContent="✓ Kopiert"},function(){});
+  };
+  try{
+    var L=JSON.parse(localStorage.getItem("lern")||"{}"),t=today();
+    L.done=L.done||{};
+    if(!L.done[LESSON_ID]){L.xp=(L.xp||0)+xp}
+    L.done[LESSON_ID]={score:sc,date:t};
+    if(L.last!==t){var d=L.last?(new Date(t)-new Date(L.last))/864e5:99;L.streak=d<=1?(L.streak||0)+1:1;L.last=t}
+    localStorage.setItem("lern",JSON.stringify(L));
+  }catch(e){}
+}
+</script>
+</body>
+</html>

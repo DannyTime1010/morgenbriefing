@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>L16 · RC-Glied</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--tx:#1f2430;--mut:#6b7280;--ac:#58cc02;--acd:#46a302;--bad:#ea2b2b;--bd:#e5e7eb;--okbg:#e7f9d4;--badbg:#ffe1e1}
+@media(prefers-color-scheme:dark){:root{--bg:#131820;--card:#1d242f;--tx:#eef1f6;--mut:#9aa4b2;--bd:#2c3542;--okbg:#1f3a14;--badbg:#3f1b1b}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:18px/1.55 system-ui,-apple-system,sans-serif;padding:16px;max-width:640px;margin-inline:auto;padding-bottom:120px}
+a.back{display:inline-block;padding:10px 0;color:var(--ac);text-decoration:none;font-weight:600}
+h1{font-size:24px;margin:4px 0 12px}
+.bar{height:10px;background:var(--bd);border-radius:5px;overflow:hidden;margin:8px 0 16px}
+.bar i{display:block;height:100%;width:0;background:var(--ac);transition:width .3s}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:16px;margin-bottom:14px}
+.ex{background:var(--okbg);border-radius:12px;padding:12px;margin-top:10px}
+code{background:var(--bd);padding:1px 6px;border-radius:6px}
+.btn{display:block;width:100%;min-height:54px;padding:14px;font-size:18px;font-weight:700;border-radius:14px;border:2px solid var(--bd);border-bottom-width:4px;background:var(--card);color:var(--tx);margin:10px 0;text-align:left;cursor:pointer}
+.btn.go{background:var(--ac);border-color:var(--acd);color:#fff;text-align:center}
+.btn.ok{background:var(--okbg);border-color:var(--ac)}
+.btn.no{background:var(--badbg);border-color:var(--bad)}
+.btn:disabled{opacity:1;cursor:default}
+input.in{width:100%;min-height:54px;padding:12px;font-size:20px;border-radius:14px;border:2px solid var(--bd);background:var(--card);color:var(--tx)}
+.fb{border-radius:14px;padding:14px;margin-top:12px}
+.fb.ok{background:var(--okbg)}.fb.no{background:var(--badbg)}
+.hide{display:none}
+.mut{color:var(--mut);font-size:15px}
+.res{font-family:ui-monospace,monospace;background:var(--bd);padding:12px;border-radius:12px;word-break:break-all}
+.rep{display:inline-block;font-size:13px;background:#ffb02e;color:#222;border-radius:8px;padding:2px 8px;margin-bottom:6px}
+
+.fig{width:100%;height:auto;display:block;margin:4px 0 10px}
+.fig text{paint-order:stroke;stroke:var(--card);stroke-width:4px;stroke-linejoin:round;fill:var(--tx);font-family:system-ui,-apple-system,sans-serif;font-size:15px}
+.fig .big{font-size:19px;font-weight:700}
+.fig .mt{fill:var(--mut)}
+.fig .hlt,.fig tspan.hlt{fill:var(--acd);font-weight:700}
+.fig .badt{fill:var(--bad);font-weight:700}
+.fig tspan.bl{fill:#3b82f6;font-weight:700}.fig tspan.or{fill:#f59e0b;font-weight:700}
+.fig .bx{fill:var(--card);stroke:var(--bd);stroke-width:2}
+.fig .bxg{fill:var(--okbg);stroke:var(--ac);stroke-width:2}
+.fig .bxr{fill:var(--badbg);stroke:var(--bad);stroke-width:2}
+.fig .ar{stroke:var(--mut);stroke-width:2}.fig .ahf{fill:var(--mut)}
+.fig .ax{stroke:var(--mut);stroke-width:1.2}
+.fig .cv{fill:none;stroke:var(--mut);stroke-width:2;opacity:.55}
+.fig .cvh{fill:none;stroke:var(--ac);stroke-width:3.5}
+.fig .fl{stroke:#3b82f6;stroke-width:1.8;stroke-linecap:round}
+.fig .dash{stroke:var(--bad);stroke-width:1.5;stroke-dasharray:5 4}
+.fig .dt{fill:var(--ac);stroke:var(--card);stroke-width:2}
+.fig .acl{stroke:var(--ac);stroke-width:2}
+.fig .bad{stroke:var(--bad);stroke-width:3}
+.ct{font-size:18px;margin:4px 2px 0}
+.dots{display:flex;gap:6px;justify-content:center;margin:6px 0}
+.dots i{width:9px;height:9px;border-radius:50%;background:var(--bd)}.dots i.on{background:var(--ac)}
+
+.fig .cvr{fill:none;stroke:var(--bad);stroke-width:3}
+.fig .cvo{fill:none;stroke:#f59e0b;stroke-width:3}
+.fig .cvb{fill:none;stroke:#3b82f6;stroke-width:3}
+.fig .ort{fill:#d97706;font-weight:700}.fig .blt{fill:#3b82f6;font-weight:700}
+.fig .wire{fill:none;stroke:var(--tx);stroke-width:2}
+.fig .wire3{stroke:var(--tx);stroke-width:4}
+.fig .bgr{fill:var(--card);stroke:none}
+.fig .bxk{fill:var(--bd);stroke:var(--tx);stroke-width:2}
+.fig .fa{stroke:var(--ac);stroke-width:4}.fig .fr{stroke:var(--bad);stroke-width:4}
+</style>
+</head>
+<body>
+<a class="back" href="../index.html">← Übersicht</a>
+<h1 id="ttl">L16 · RC-Glied</h1>
+<div class="bar"><i id="bar"></i></div>
+
+<!-- 1) ERKLÄRUNG -->
+<section id="intro">
+  <div class="card">
+<svg viewBox="0 0 345 165" class="fig" xmlns="http://www.w3.org/2000/svg"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ahf"/></marker></defs><polyline points="40,40 40,150 300,150 300,40 210,40" class="wire"/><line x1="40" y1="40" x2="70" y2="40" class="wire"/><line x1="70" y1="40" x2="96" y2="26" class="wire"/><line x1="100" y1="40" x2="130" y2="40" class="wire"/><text x="84" y="18" text-anchor="middle" class="mt" style="font-size:12px">t = 0</text><rect x="130" y="28" width="80" height="24" rx="4" class="bx"/><text x="170" y="45" text-anchor="middle" class="big">R</text><circle cx="40" cy="95" r="18" class="bx"/><text x="40" y="101" text-anchor="middle" class="" style="font-size:13px">u(t)</text><rect x="282" y="80" width="36" height="30" class="bgr"/><line x1="282" y1="88" x2="318" y2="88" class="wire3"/><line x1="282" y1="102" x2="318" y2="102" class="wire3"/><text x="330" y="100" text-anchor="start" class="big">C</text><text x="170" y="72" text-anchor="middle" class="hlt" style="font-size:14px">u_R = R·i</text><text x="232" y="98" text-anchor="end" class="hlt" style="font-size:14px">u_C</text></svg><p class="ct">Maschenregel: u_R + u_C = u(t), mit u_R = R·i und <b>i = C·du_C/dt</b></p><svg viewBox="0 0 340 120" class="fig" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="8" width="320" height="50" rx="10" class="bxg"/><text x="170" y="38" text-anchor="middle" class="big">R·C·du_C/dt + u_C = u(t)</text><rect x="60" y="68" width="220" height="44" rx="10" class="bx"/><text x="170" y="95" text-anchor="middle" class="big">τ = R·C</text></svg><p class="ct">Bei Gleichspannung U₀: Trennen der Variablen.</p><svg viewBox="0 0 340 220" class="fig" xmlns="http://www.w3.org/2000/svg"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ahf"/></marker></defs><line x1="24" y1="196" x2="316" y2="196" class="ax"/><line x1="24" y1="196" x2="24" y2="24" class="ax"/><text x="312" y="190" text-anchor="end" class="mt" style="font-size:13px">t</text><text x="30" y="36" text-anchor="start" class="mt" style="font-size:13px">u_C</text><polyline points="24.0,196.0 25.8,191.4 27.6,186.9 29.5,182.6 31.3,178.4 33.1,174.4 35.0,170.4 36.8,166.6 38.6,162.9 40.4,159.3 42.2,155.9 44.1,152.5 45.9,149.2 47.7,146.1 49.5,143.0 51.4,140.0 53.2,137.2 55.0,134.4 56.9,131.7 58.7,129.0 60.5,126.5 62.3,124.0 64.2,121.6 66.0,119.3 67.8,117.1 69.6,114.9 71.4,112.8 73.3,110.8 75.1,108.8 76.9,106.9 78.8,105.0 80.6,103.2 82.4,101.5 84.2,99.8 86.0,98.1 87.9,96.5 89.7,95.0 91.5,93.5 93.3,92.0 95.2,90.6 97.0,89.3 98.8,88.0 100.6,86.7 102.5,85.5 104.3,84.3 106.1,83.1 108.0,82.0 109.8,80.9 111.6,79.8 113.4,78.8 115.2,77.8 117.1,76.8 118.9,75.9 120.7,75.0 122.5,74.1 124.4,73.3 126.2,72.4 128.0,71.6 129.8,70.9 131.7,70.1 133.5,69.4 135.3,68.7 137.1,68.0 139.0,67.3 140.8,66.7 142.6,66.1 144.4,65.4 146.3,64.9 148.1,64.3 149.9,63.7 151.8,63.2 153.6,62.7 155.4,62.2 157.2,61.7 159.0,61.2 160.9,60.8 162.7,60.3 164.5,59.9 166.3,59.5 168.2,59.1 170.0,58.7 171.8,58.3 173.7,58.0 175.5,57.6 177.3,57.3 179.1,56.9 180.9,56.6 182.8,56.3 184.6,56.0 186.4,55.7 188.2,55.4 190.1,55.1 191.9,54.9 193.7,54.6 195.5,54.4 197.4,54.1 199.2,53.9 201.0,53.7 202.8,53.4 204.7,53.2 206.5,53.0 208.3,52.8 210.2,52.6 212.0,52.4 213.8,52.2 215.6,52.1 217.4,51.9 219.3,51.7 221.1,51.6 222.9,51.4 224.8,51.2 226.6,51.1 228.4,51.0 230.2,50.8 232.0,50.7 233.9,50.5 235.7,50.4 237.5,50.3 239.3,50.2 241.2,50.1 243.0,50.0 244.8,49.8 246.7,49.7 248.5,49.6 250.3,49.5 252.1,49.4 253.9,49.4 255.8,49.3 257.6,49.2 259.4,49.1 261.2,49.0 263.1,48.9 264.9,48.9 266.7,48.8 268.5,48.7 270.4,48.6 272.2,48.6 274.0,48.5 275.9,48.4 277.7,48.4 279.5,48.3 281.3,48.3 283.1,48.2 285.0,48.1 286.8,48.1 288.6,48.0 290.4,48.0 292.3,47.9 294.1,47.9 295.9,47.9 297.8,47.8 299.6,47.8 301.4,47.7 303.2,47.7 305.1,47.7 306.9,47.6 308.7,47.6 310.5,47.5 312.3,47.5 314.2,47.5 316.0,47.4" class="cvh"/><polyline points="24.0,46.4 25.8,51.0 27.6,55.5 29.5,59.8 31.3,64.0 33.1,68.1 35.0,72.0 36.8,75.8 38.6,79.5 40.4,83.1 42.2,86.6 44.1,89.9 45.9,93.2 47.7,96.4 49.5,99.4 51.4,102.4 53.2,105.3 55.0,108.1 56.9,110.8 58.7,113.4 60.5,115.9 62.3,118.4 64.2,120.8 66.0,123.1 67.8,125.4 69.6,127.5 71.4,129.6 73.3,131.7 75.1,133.7 76.9,135.6 78.8,137.4 80.6,139.2 82.4,141.0 84.2,142.7 86.0,144.3 87.9,145.9 89.7,147.4 91.5,148.9 93.3,150.4 95.2,151.8 97.0,153.1 98.8,154.5 100.6,155.7 102.5,157.0 104.3,158.2 106.1,159.3 108.0,160.5 109.8,161.6 111.6,162.6 113.4,163.7 115.2,164.6 117.1,165.6 118.9,166.5 120.7,167.5 122.5,168.3 124.4,169.2 126.2,170.0 128.0,170.8 129.8,171.6 131.7,172.3 133.5,173.1 135.3,173.8 137.1,174.5 139.0,175.1 140.8,175.8 142.6,176.4 144.4,177.0 146.3,177.6 148.1,178.1 149.9,178.7 151.8,179.2 153.6,179.7 155.4,180.2 157.2,180.7 159.0,181.2 160.9,181.6 162.7,182.1 164.5,182.5 166.3,182.9 168.2,183.3 170.0,183.7 171.8,184.1 173.7,184.5 175.5,184.8 177.3,185.2 179.1,185.5 180.9,185.8 182.8,186.1 184.6,186.4 186.4,186.7 188.2,187.0 190.1,187.3 191.9,187.6 193.7,187.8 195.5,188.1 197.4,188.3 199.2,188.6 201.0,188.8 202.8,189.0 204.7,189.2 206.5,189.4 208.3,189.6 210.2,189.8 212.0,190.0 213.8,190.2 215.6,190.4 217.4,190.6 219.3,190.7 221.1,190.9 222.9,191.0 224.8,191.2 226.6,191.3 228.4,191.5 230.2,191.6 232.0,191.8 233.9,191.9 235.7,192.0 237.5,192.1 239.3,192.3 241.2,192.4 243.0,192.5 244.8,192.6 246.7,192.7 248.5,192.8 250.3,192.9 252.1,193.0 253.9,193.1 255.8,193.2 257.6,193.3 259.4,193.3 261.2,193.4 263.1,193.5 264.9,193.6 266.7,193.7 268.5,193.7 270.4,193.8 272.2,193.9 274.0,193.9 275.9,194.0 277.7,194.1 279.5,194.1 281.3,194.2 283.1,194.2 285.0,194.3 286.8,194.3 288.6,194.4 290.4,194.4 292.3,194.5 294.1,194.5 295.9,194.6 297.8,194.6 299.6,194.7 301.4,194.7 303.2,194.7 305.1,194.8 306.9,194.8 308.7,194.9 310.5,194.9 312.3,194.9 314.2,195.0 316.0,195.0" class="cvr"/><line x1="82.4" y1="196" x2="82.4" y2="101.475" class="dash"/><text x="85.32" y="97.287" text-anchor="start" class="hlt" style="font-size:13px">63 %</text><text x="82.4" y="196" text-anchor="start" class="mt" style="font-size:13px"></text><text x="79.48" y="190.017" text-anchor="end" class="mt" style="font-size:14px">τ</text><text x="210.88" y="41.9478" text-anchor="start" class="hlt" style="font-size:13px">Laden</text><text x="175.84" y="166.087" text-anchor="start" class="badt" style="font-size:13px">Entladen</text></svg><p class="ct">Laden: u_C = U₀·(1 − e^(−t/τ)). Entladen: u_C = U₀·e^(−t/τ).</p>
+  </div>
+  <button class="btn go" id="start">Los geht's →</button>
+</section>
+
+<!-- 2) QUIZ -->
+<section id="quiz" class="hide">
+  <div class="mut" id="cnt"></div>
+  <div class="card"><div id="rep" class="hide"><span class="rep">🔁 Wiederholung</span></div><div id="q"></div></div>
+  <div id="ans"></div>
+  <div id="fb" class="fb hide"></div>
+  <button class="btn go hide" id="next">Weiter →</button>
+</section>
+
+<!-- 3) ERGEBNIS -->
+<section id="end" class="hide">
+  <div class="card">
+    <h2 id="score"></h2>
+    <p id="xpmsg"></p>
+    <p class="mut">Schick mir diesen Code im Chat, dann trage ich es in dein progress.json ein:</p>
+    <div class="res" id="code"></div>
+    <button class="btn go" id="copy">📋 Code kopieren</button>
+  </div>
+  <a class="btn go" href="../index.html" style="text-decoration:none">Zur Übersicht</a>
+</section>
+
+<script>
+var LESSON_ID="16";
+/* Fragetypen:
+   {t:"mc",  q:"Frage", o:["A","B","C"], a:1, e:"Erklärung", topic:"Thema", rep:false}
+   {t:"fill",q:"Der ___ ist …", a:["antwort","alt. schreibweise"], e:"Erklärung", topic:"Thema"}
+   {t:"calc",q:"12·3 = ?", a:36, tol:0, e:"Rechenweg", topic:"Thema"}  */
+var Q=[
+  {t:"calc",q:"R = 2 kΩ, C = 100 µF. τ in Sekunden?",a:0.2,tol:0.001,e:"τ = 2·10³ · 100·10⁻⁶ = 0,2 s (4.67)",topic:"Zeitkonstante"},
+  {t:"mc",q:"Welche DGL gilt (R = 2 kΩ, C = 100 µF, U₀ = 12 V)?",o:["u_C + 0,2·du_C/dt = 12","u_C − 0,2·du_C/dt = 12","0,2·u_C + du_C/dt = 12"],a:0,e:"u_C + R·C·du_C/dt = U₀. (4.67)",topic:"RC: DGL aufstellen"},
+  {t:"mc",q:"Lösung für den ungeladenen Kondensator?",o:["u_C = 12·e^(−5t)","u_C = 12·(1 − e^(−5t))","u_C = 12 − 5t"],a:1,e:"u_C(0) = 0 → u_C = 12 − 12·e^(−5t). (4.67)",topic:"RC laden"},
+  {t:"calc",q:"Wie viel Prozent von U₀ hat u_C nach t = τ? (1 Dezimale)",a:63.2,tol:0.1,e:"1 − e^(−1) ≈ 0,632 → 63,2 %",topic:"Zeitkonstante"},
+  {t:"mc",q:"Entladung (u(t) = 0). Welche DGL?",o:["R·C·du_C/dt + u_C = 0","R·C·du_C/dt = U₀","u_C = R·i"],a:0,e:"Keine Spannung angelegt → rechte Seite 0 → homogen. (4.68)",topic:"RC entladen"},
+  {t:"calc",q:"Entladung: R = 500 Ω, C = 2 mF, u_C(0) = 15 V. Berechne u_C(2 s).",a:2.03,tol:0.02,e:"τ = 500·0,002 = 1 s → u_C = 15·e^(−t) → u_C(2) = 15·e^(−2) ≈ 2,03 V (4.68)",topic:"RC entladen"},
+  {t:"calc",q:"u_C = 12·(1 − e^(−5t)), C = 100 µF. Strom i(0) in mA? (i = C·du_C/dt)",a:6,tol:0.01,e:"du_C/dt = 60·e^(−5t) → i(0) = 100·10⁻⁶ · 60 = 0,006 A = 6 mA",topic:"Strom aus u_C"},
+  {t:"mc",q:"u_C = 12 − 12·e^(−5t): Was ist der flüchtige Anteil?",o:["12","−12·e^(−5t)","e^(−5t)"],a:1,e:"Der Teil mit e^(−…). (4.67)",topic:"flüchtig/stationär",rep:true}
+];
+
+var i=0,right=0,wrong=[],$=function(id){return document.getElementById(id)};
+function show(id){["intro","quiz","end"].forEach(function(s){$(s).classList.toggle("hide",s!==id)})}
+$("start").onclick=function(){show("quiz");ask()};
+function norm(s){return String(s).trim().toLowerCase().replace(/\s+/g," ")}
+function ask(){
+  var x=Q[i];$("cnt").textContent="Frage "+(i+1)+" von "+Q.length;
+  $("bar").style.width=(i/Q.length*100)+"%";
+  $("rep").classList.toggle("hide",!x.rep);
+  $("q").textContent=x.q;$("fb").className="fb hide";$("next").classList.add("hide");
+  var a=$("ans");a.innerHTML="";
+  if(x.t==="mc"){x.o.forEach(function(o,k){var b=document.createElement("button");b.className="btn";b.textContent=o;b.onclick=function(){done(k===x.a,b)};a.appendChild(b)})}
+  else{
+    var inp=document.createElement("input");inp.className="in";inp.autocomplete="off";inp.autocapitalize="none";
+    if(x.t==="calc")inp.inputMode="decimal";
+    var b=document.createElement("button");b.className="btn go";b.textContent="Prüfen";
+    b.onclick=function(){
+      var v=inp.value;if(!v.trim())return;var ok;
+      if(x.t==="calc"){ok=Math.abs(parseFloat(v.replace(",","."))-x.a)<=(x.tol||0)}
+      else{ok=x.a.some(function(z){return norm(z)===norm(v)})}
+      inp.disabled=true;done(ok,b)};
+    a.appendChild(inp);a.appendChild(b);
+  }
+}
+function done(ok,btn){
+  var x=Q[i];
+  if(x.t==="mc"){var bs=$("ans").children;for(var k=0;k<bs.length;k++){bs[k].disabled=true;if(k===x.a)bs[k].classList.add("ok")}if(!ok)btn.classList.add("no")}
+  else btn.disabled=true;
+  if(ok)right++;else wrong.push(i+1);
+  var sol=x.t==="mc"?x.o[x.a]:(x.t==="calc"?x.a:x.a[0]);
+  var f=$("fb");f.className="fb "+(ok?"ok":"no");
+  f.innerHTML=(ok?"✅ <b>Richtig!</b> ":"❌ <b>Nicht ganz.</b> Richtig: <b>"+sol+"</b>. ")+"<br>"+x.e;
+  var n=$("next");n.classList.remove("hide");n.textContent=i===Q.length-1?"Ergebnis →":"Weiter →";
+  n.scrollIntoView({behavior:"smooth",block:"center"});
+}
+$("next").onclick=function(){i++;if(i<Q.length)ask();else finish()};
+function today(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function finish(){
+  $("bar").style.width="100%";show("end");
+  var xp=right*10+20+(right===Q.length?10:0);
+  var sc=right+"/"+Q.length;
+  $("score").textContent=(right===Q.length?"🎉 ":"👍 ")+sc+" richtig";
+  $("xpmsg").textContent="+"+xp+" XP";
+  var code="L"+LESSON_ID+" "+sc+(wrong.length?" falsch:"+wrong.join(","):"");
+  $("code").textContent=code;
+  $("copy").onclick=function(){
+    if(navigator.clipboard)navigator.clipboard.writeText(code).then(function(){$("copy").textContent="✓ Kopiert"},function(){});
+  };
+  try{
+    var L=JSON.parse(localStorage.getItem("lern")||"{}"),t=today();
+    L.done=L.done||{};
+    if(!L.done[LESSON_ID]){L.xp=(L.xp||0)+xp}
+    L.done[LESSON_ID]={score:sc,date:t};
+    if(L.last!==t){var d=L.last?(new Date(t)-new Date(L.last))/864e5:99;L.streak=d<=1?(L.streak||0)+1:1;L.last=t}
+    localStorage.setItem("lern",JSON.stringify(L));
+  }catch(e){}
+}
+</script>
+</body>
+</html>
