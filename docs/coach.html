@@ -362,7 +362,7 @@ var DB=null,REF=null,saving=false,again=false;
 
 /* ---------- Speicher ---------- */
 function setSync(cls,txt){var s=$("sync");s.className="sync "+cls;s.lastChild.textContent=txt}
-function applyRemote(d){if(!d)return;ST.done=d.done||{};ST.xp=d.xp||0;ST.streak=d.streak||0;ST.best=d.best||0;ST.last=d.last||null;ST.mistakes=d.mistakes||[];ST.practice=d.practice||{};render()}
+function applyRemote(d){if(!d)return;d=JSON.parse(JSON.stringify(d));ST.done=d.done||{};ST.xp=d.xp||0;ST.streak=d.streak||0;ST.best=d.best||0;ST.last=d.last||null;ST.mistakes=d.mistakes||[];ST.practice=d.practice||{};render()}
 function local(){try{var s=JSON.parse(localStorage.getItem("dgl-coach")||"null");if(s)applyRemote(s)}catch(e){}}
 function save(){
   try{localStorage.setItem("dgl-coach",JSON.stringify(ST))}catch(e){}

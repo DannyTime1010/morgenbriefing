@@ -1,12 +1,38 @@
 {
   "pages_url": "https://dannytime1010.github.io/morgenbriefing/",
-  "streak": 1,
-  "best_streak": 1,
-  "last_active": "2026-11-21",
-  "xp": 0,
-  "completed": [],
+  "streak": 2,
+  "best_streak": 2,
+  "last_active": "2026-11-22",
+  "xp": 220,
+  "completed": [
+    {
+      "id": "01",
+      "title": "Grundbegriffe: Ordnung, allgemeine & spezielle Lösung",
+      "date": "2026-11-22",
+      "score": "8/8"
+    },
+    {
+      "id": "02",
+      "title": "DGL aus Text aufstellen",
+      "date": "2026-11-22",
+      "score": "8/8"
+    }
+  ],
   "mistakes": [],
-  "reviews": [],
+  "reviews": [
+    {
+      "topic": "Ordnung & allgemeine/spezielle Lösung",
+      "lesson": "01",
+      "stage": 1,
+      "due": "2026-11-23"
+    },
+    {
+      "topic": "DGL aus Text aufstellen",
+      "lesson": "02",
+      "stage": 1,
+      "due": "2026-11-23"
+    }
+  ],
   "roadmap": [
     {
       "id": "01",
